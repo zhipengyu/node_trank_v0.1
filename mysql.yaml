@@ -6,3 +6,9 @@ DELETE /api/del/:id:
   DELETE FROM httpDates WHERE id=${data.id};
 PUT /api/fala:
   INSERT INTO httpDates ( requestURL,Referer,requestMethod,date,createTime) VALUES ( ${data.requestURL},${data.Referer},${data.requestMethod},${data.date},UNIX_TIMESTAMP(CURDATE()) );
+PUT /api/showLoad:
+  INSERT INTO visit ( ip,url) VALUES ( ${data.ip},${data.url});
+GET /api/showLoad/:ip:
+  SELECT url FROM visit WHERE ip=${data.ip};
+GET /api/showCount/:ip:
+  SELECT count(*) FROM visit WHERE ip=${data.ip};
