@@ -11,4 +11,4 @@ PUT /api/showLoad:
 GET /api/showLoad/:ip:
   SELECT url FROM visit WHERE ip=${data.ip};
 GET /api/showCount/:ip:
-  SELECT count(*) AS 'count' FROM visit WHERE ip=${data.ip};
+  SELECT count(*) AS 'count',url FROM visit WHERE ip=${data.ip};
