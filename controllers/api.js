@@ -11,10 +11,13 @@ function best() {
         c[key] = async (ctx, next) => {
             let _sql = date[key];
             var data = ctx.request.body;
+           if(reg[0].test(key)){
+               data= ctx.query;
+           }
             if(!data){
                 data=ctx.params;
             }
-            const _date = stringEs6(_sql, data)
+            const _date = stringEs6(_sql, data);
             const bet = await mysql(_date);
             ctx.rest({
                 data: bet

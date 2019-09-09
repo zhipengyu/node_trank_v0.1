@@ -7,7 +7,6 @@
     <list default="true" id="60f817d3-0e9e-40bb-9ea5-a3cba49a3f67" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/mysql.yaml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -82,15 +81,15 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="630" />
-          <entry key="txt" value="28" />
+          <entry key="js" value="820" />
+          <entry key="txt" value="34" />
           <entry key="yaml" value="202" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="630" />
-          <entry key="PLAIN_TEXT" value="28" />
+          <entry key="JavaScript" value="820" />
+          <entry key="PLAIN_TEXT" value="34" />
           <entry key="YAML" value="202" />
         </counts>
       </usages-collector>
@@ -143,8 +142,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/api.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+            <state relative-caret-position="190">
+              <caret line="19" column="48" selection-start-line="19" selection-start-column="48" selection-end-line="19" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -171,8 +170,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="20" selection-start-line="20" selection-end-line="20" selection-end-column="19" />
+            <state relative-caret-position="-931">
+              <caret line="5" column="33" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -180,8 +179,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysql.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+            <state relative-caret-position="152">
+              <caret line="8" column="17" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -189,8 +188,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/contorller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="300">
+              <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="26" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -259,8 +258,8 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-258" />
-    <option name="y" value="95" />
+    <option name="x" value="26" />
+    <option name="y" value="21" />
     <option name="width" value="1456" />
     <option name="height" value="851" />
   </component>
@@ -411,7 +410,7 @@
       <workItem from="1566958842324" duration="51000" />
       <workItem from="1567650814389" duration="2007000" />
       <workItem from="1567836256740" duration="10086000" />
-      <workItem from="1567997367508" duration="4918000" />
+      <workItem from="1567997367508" duration="8657000" />
     </task>
     <task id="LOCAL-00001" summary="添加查找api">
       <created>1567848250883</created>
@@ -427,11 +426,25 @@
       <option name="project" value="LOCAL" />
       <updated>1567849535858</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="dome">
+      <created>1568017458704</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1568017458705</updated>
+    </task>
+    <task id="LOCAL-00004" summary="haolle">
+      <created>1568018893003</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1568018893003</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65425000" />
+    <option name="totallyTimeSpent" value="69164000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -446,7 +459,7 @@
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.81707317" visible="true" weight="0.33568406" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.81707317" visible="true" weight="0.33568406" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.18292683" side_tool="true" visible="true" weight="0.33568406" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -456,7 +469,7 @@
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32884097" />
-      <window_info anchor="bottom" id="Run" order="6" visible="true" weight="0.44743934" />
+      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.44743934" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -501,7 +514,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="添加查找api" />
     <MESSAGE value="dome" />
-    <option name="LAST_COMMIT_MESSAGE" value="dome" />
+    <MESSAGE value="haolle" />
+    <option name="LAST_COMMIT_MESSAGE" value="haolle" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/views/index.pug" />
@@ -554,24 +568,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/contorller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="2" column="51" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="20" selection-start-line="20" selection-end-line="20" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -604,15 +604,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysql.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+        <state relative-caret-position="152">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/contorller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="26" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-931">
+          <caret line="5" column="33" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+        <state relative-caret-position="190">
+          <caret line="19" column="48" selection-start-line="19" selection-start-column="48" selection-end-line="19" selection-end-column="48" />
         </state>
       </provider>
     </entry>
