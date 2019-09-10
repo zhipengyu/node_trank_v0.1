@@ -3,6 +3,7 @@ const fs = require('fs');
 // add url-route in /controllers:
 
 function addMapping(router, mapping) {
+    console.log(mapping)
     for (var url in mapping) {
         if (url.startsWith('GET ')) {
             var path = url.substring(4);

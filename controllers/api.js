@@ -5,24 +5,25 @@ const YAML=require('yamljs');
 const fs=require('fs')
 const date=YAML.parse(fs.readFileSync('./mysql.yaml').toString());
 var c={};
+//有bug=-=
 function best() {
     var reg=[/^GET/gi,/^DELETE/gi,/^POST/gi,/^PUT/gi]
     for(let key in date) {
         c[key] = async (ctx, next) => {
             let _sql = date[key];
             var data = ctx.request.body;
-           if(reg[0].test(key)){
+           if(key.search(reg[0])>=0){
                data= ctx.query;
            }
-            if(!data){
+            if(!data&&ctx.params.id){
                 data=ctx.params;
             }
+            console.log(data)
             const _date = stringEs6(_sql, data);
             const bet = await mysql(_date);
             ctx.rest({
                 data: bet
             });
-            next();
         }
 }}
 
