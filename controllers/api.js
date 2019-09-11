@@ -18,8 +18,10 @@ function best() {
             if(!data&&ctx.params.id){
                 data=ctx.params;
             }
-            console.log(data)
+
             const _date = stringEs6(_sql, data);
+            console.log(data.combo,JSON.stringify(data.combo))
+            console.log(_date)
             const bet = await mysql(_date);
             ctx.rest({
                 data: bet

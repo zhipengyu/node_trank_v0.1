@@ -8,6 +8,9 @@ router.get('/string', async (ctx, next) => {
   ctx.body = `var a=123123;console.log(a)`
   //   ctx.body=''
 })
+router.get('/test',async (ctx,next)=>{
+  await  ctx.render('dome');
+})
 
 router.get('/json', async (ctx, next) => {
   ctx.body = {
