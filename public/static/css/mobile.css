@@ -1,0 +1,248 @@
+/*reset*/
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin:0; padding:0; }
+/*取消移动端浏览器可点击元素的高亮颜色*/
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+h1, h2, h3, h4, h5, h6 { font-size:100%; font-weight:500; }
+ol, ul { list-style:none; }
+fieldset, img { border:none 0; }
+html { color:#333; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; font-family:"\5FAE\8F6F\96C5\9ED1",Helvetica; font-size:1em/1.25;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block; }
+audio, canvas, video { display:inline-block;}
+body { font-size:12px;}
+button, input, select, textarea { font-size:100%; -webkit-border-radius:0; border-radius:0;}
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor:pointer; -webkit-appearance:button;}
+img, object, video, embed { max-width:100%; vertical-align:middle; -moz-box-sizing: border-box; box-sizing:border-box;}
+
+a { color:#333; text-decoration:none;}
+/*font图标*/
+/*font图标*/
+@font-face {
+    font-family: 'icomoon';
+    src:url('../fonts/icomoon.eot');
+    src:url('../fonts/icomoon.eot') format('embedded-opentype'),
+        url("../fonts/d43da1b5f2b14b869d0de80eab689dff.woff") format('woff'),
+        url('../fonts/icomoon.ttf') format('truetype'),
+        url('../fonts/icomoon.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+body .font-ico { font-family: 'icomoon' !important;font-style: normal !important; font-weight: normal; font-variant: normal;text-transform: none; line-height: 1; -webkit-font-smoothing: antialiased;}
+#page-content-w{
+    position: absolute;
+    z-index: 1;
+    top: 50px;
+    bottom: 45px;
+    left: 0;
+    width: 100%;
+    background: white;
+    overflow: auto;
+}
+#scroller{
+    position: absolute;
+    z-index: 1;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    width: 100%;
+    padding: 0;
+}
+
+/*pc预览页时去除iframe中的横向滚动条用*/
+body{ overflow-x: hidden; }
+
+.mod-loader{
+    display: none;
+    width: 12.5em;
+    filter: Alpha(Opacity=88);
+    opacity: .88;
+    box-shadow: 0 1px 1px -1px #fff;
+    height: auto;
+    margin-left: -6.875em;
+    margin-top: -2.6875em;
+    padding: .625em;
+    z-index: 9999999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border: 0;
+}
+
+.mod-loader .icon-loading{
+    margin: 0 auto .625em;
+    filter: Alpha(Opacity=75);
+    opacity: .75;
+    background-color: #000;
+    display: block;
+    width: 24px;
+    height: 24px;
+    padding: .0625em;
+    -webkit-border-radius: 2.25em;
+    border-radius: 2.25em;
+    background: url(../images/loading-light.gif);
+    background-size: 24px;
+}
+.mod-loader h1{
+    color: #aaa;
+    font-size: 12px;
+    margin: 0;
+    text-align: center;
+}
+
+.phone-main .page-w{
+    position: relative;
+    padding-top: 0.1px;
+    overflow: hidden;
+}
+
+.font-ico.icon-share2:before {
+    content: "\e63c";
+}
+.font-ico.icon-good2:before {
+    content: "\e63f";
+}
+.font-ico.icon-home2:before {
+    content: "\e640";
+}
+.font-ico.icon-search:before {
+	content: "\e62e";
+}
+.font-ico.icon-btn-wrong:before {
+	content: "\e657";
+}
+.font-ico.icon-btn-leftarrow:before {
+	content: "\e66f";
+}
+.font-ico.icon-btn-time:before {
+	content: "\e658";
+}
+.font-ico.icon-close:before {
+	content: "\e010";
+}
+.font-ico.icon-preview:before {
+	content: "\e609";
+}
+.font-ico.icon-btn-downarrow:before {
+    content: "\e654";
+}
+.font-ico.icon-btn-uparrow:before {
+    content: "\e653";
+}
+
+.kz-page-float-layer {
+    position: fixed;
+    z-index: 100;
+}
+
+.kz-page-float-layer.kz-page-bottom {
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+.kz-page-float-layer.bottom .mod-themenav2 {
+    position: static;
+}
+
+.kz-pc .kz-page-float-layer.kz-page-bottom .kz-page-ad-inner-layer {
+    /* height: 100px!important; */
+    width: 89%;
+}
+
+.kz-page-float-layer .ad-close-wrap {
+    position: fixed;
+    width: 17px;
+    height: 17px;
+    line-height: 17px;
+    font-size: 9px;
+    bottom: 30px;
+    right: 0;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.20);
+}
+
+.kz-page-float-layer .ad-close-wrap span {
+    color: #FFF;
+    display: inline;
+    vertical-align: middle;
+}
+
+.kz-page-ad-layer {
+    height: 30px;
+    text-align: center;
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgi…pZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+    background-size: 100%;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #434343),color-stop(100%, #3a3a3a));
+    background-image: -moz-linear-gradient(#434343,#3a3a3a);
+    background-image: -webkit-linear-gradient(#434343,#3a3a3a);
+    background-image: linear-gradient(#434343,#3a3a3a);
+}
+
+.kz-page-ad-layer a {
+    display: block;
+    width: 100%;
+    height: 30px;
+}
+
+.kz-page-ad-layer a img {
+    height: 30px;
+    display: block;
+    vertical-align: top;
+    margin: auto;
+}
+
+.kz-page-ad-layer a.center-flow {
+    line-height: 30px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.kz-pc .ad-close-wrap {
+    bottom: 83px!important;
+}
+
+.kzpc-content .kz-page-ad-layer {
+    display: none;
+}
+
+.image-viewer {
+    position: fixed;
+    background: #000;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+    display: none;
+    top: 0;
+    left: 0;
+}
+.image-viewer .paging {
+    position: fixed;
+    top: 80%;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+    height: 20px;
+}
+.image-viewer .paging span {
+    display: inline-block;
+    padding: .2rem .4rem;
+    border-radius: 2px;
+    background: rgba(0,0,0,.4);
+    height: 20px;
+    width: 43px;
+    font-size: .6rem;
+}
+
+/*底部站长可见管理bar*/
+.kz-manage {display: none;}
+.footer-manage {width: 100%;height: 3.125rem;background: #fff;border-top: 1px solid #e8e8e8;box-sizing: border-box;}
+.footer-manage .left {float: left;margin-top: 0.75rem;margin-left: 0.75rem;height: 1.625rem;}
+.footer-manage .avatar {height: 1.625rem;width: 1.625rem;display: inline-block;}
+.footer-manage .title {font-size: 0.75rem;color: #000;height: 1.625rem;line-height: 1.625rem;vertical-align: top;display: inline-block;margin-left: 0.625rem;}
+.footer-manage a {text-align: center;width: 5rem;float: right;margin-right: 0.9375rem;margin-top: 0.6875rem;height: 1.75rem;line-height: 1.75rem;font-size: 0.875rem;color: #ffffff;background-color: #37b2f0;border-radius: 0.125rem;}

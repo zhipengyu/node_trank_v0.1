@@ -1,0 +1,17 @@
+
+<div id="error-not-found" class="container">
+  <ul class="breadcrumb">
+        <li><a href="http://shop.qoasec.com/index.php?route=common/home">text_home</a></li>
+        <li><a href="http://shop.qoasec.com/index.php?route=error/not_found">404!</a></li>
+      </ul>
+  <div class="row">
+                <div id="content" class="col-sm-12">
+      <h1>404!</h1>
+      <p>Nice try but...</p>
+      <div class="buttons clearfix">
+        <div class="pull-right"><a href="http://shop.qoasec.com/" class="btn btn-primary"></a></div>
+      </div>
+      </div>
+    </div>
+</div>
+

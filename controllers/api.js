@@ -10,15 +10,16 @@ function best() {
     var reg=[/^GET/gi,/^DELETE/gi,/^POST/gi,/^PUT/gi]
     for(let key in date) {
         c[key] = async (ctx, next) => {
+            console.log(ctx)
             let _sql = date[key];
             var data = ctx.request.body;
+
            if(key.search(reg[0])>=0){
                data= ctx.query;
            }
             if(!data&&ctx.params.id){
                 data=ctx.params;
             }
-
             const _date = stringEs6(_sql, data);
             console.log(data.combo,JSON.stringify(data.combo))
             console.log(_date)
