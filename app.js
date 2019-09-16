@@ -8,9 +8,9 @@ const logger = require('koa-logger')
 const cors=require('koa2-cors')
 const path=require('path')
 
+
 const rest= require ('./rest');
 const controller=require('./contorller')
-
 const index = require('./routes/index')
 // const users = require('./routes/users')
 
@@ -18,14 +18,21 @@ const index = require('./routes/index')
 onerror(app)
 
 // middlewares
-app.use(koaBody());
-app.use(json())
+
+
+app.use(koaBody({
+    multipart: true,
+    formidable: {
+        maxFileSize: 12354521356
+    }
+}));
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
   extension: 'html'
 }))
+
 
 app.use(cors({
     origin: function(ctx) {
@@ -35,10 +42,10 @@ app.use(cors({
         return '*';
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-    maxAge: 5,
+    maxAge: 10,
     credentials: true,
-    allowMethods: ['GET', 'POST', 'DELETE','PUT'],
-    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    allowMethods: ['GET', 'POST', 'DELETE','PUT','OPTIONS'],
+    allowHeaders: ['Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild'],
 }))
 
 // logger
