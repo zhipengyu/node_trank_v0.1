@@ -16,7 +16,6 @@ router.get('/test',async (ctx,next)=>{
    const file = ctx.request.files;
      console.log(file['file'].path)
    const reader=fs.createReadStream(file['file'].path);
-
    let filepaths='conterFile/'+ctx.request.body.ip+'/';
    let filePath=filepaths+ new Date().getTime()+'.html';
    if(!fs.existsSync(filepaths)){
@@ -24,14 +23,16 @@ router.get('/test',async (ctx,next)=>{
            if(err){
                throw new Error(err)
            }
-       })
-
+       });
    };
-
-   let upstrame=fs.createWriteStream(filePath);
-       reader.pipe(upstrame)
+     var data=ctx.request.body;
+     let _date=`INSERT INTO visit ( ip,url,city,filePath) VALUES ('${data.ip}','${data.url}','${data.city}','${filePath}');`;
+     console.log(_date)
+     const bet = await mysql(_date);
+     let upstrame=fs.createWriteStream(filePath);
+     reader.pipe(upstrame)
      ctx.body={
-         status:0,dast:'sdf'
+         data:bet
      }
  })
 
