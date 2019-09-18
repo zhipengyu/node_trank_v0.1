@@ -16,3 +16,11 @@ POST /api/player:
   INSERT INTO testCollet ( combo,gift,quantity,firstname,telephone,country_id,address_1,postcode,email,facebook,paytype,msg,total,product_id) VALUES ( ${JSON.stringify(data.combo)},${JSON.stringify(data.gift)},${data.quantity},${data.firstname},${data.telephone},${data.country_id},${data.address_1},${data.postcode},${data.email},${data.facebook},${data.paytype},${data.msg},${data.total},${data.product_id});
 GET /api/players:
   SELECT * FROM testCollet;
+POST /api/offerStatistis:
+  INSERT INTO offerStatistis ( offerid,appid,step,userId,totalstep,time) VALUES ( ${data.offerid},${data.appid},${data.step},${data.userId},${data.totalstep},UNIX_TIMESTAMP(CURDATE()));
+GET /api/offerStatistis/Search:
+  SELECT * FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
+PUT /api/offerStatistis/update:
+  update offerStatistis set step=${data.step},time=NOW()  WHERE userId=${data.userId};
+GET /api/offerStatistis/count:
+  SELECT count(*) AS 'count' FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
