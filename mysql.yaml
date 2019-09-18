@@ -17,7 +17,7 @@ POST /api/player:
 GET /api/players:
   SELECT * FROM testCollet;
 POST /api/offerStatistis:
-  INSERT INTO offerStatistis ( offerid,appid,step,userId,totalstep,time) VALUES ( ${data.offerid},${data.appid},${data.step},${data.userId},${data.totalstep},UNIX_TIMESTAMP(CURDATE()));
+  INSERT INTO offerStatistis ( offerid,appid,step,userId,totalstep,time) VALUES ( ${data.offerid},${data.appid},${data.step},${data.userId},${data.totalstep},NOW());
 GET /api/offerStatistis/Search:
   SELECT * FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
 PUT /api/offerStatistis/update:
