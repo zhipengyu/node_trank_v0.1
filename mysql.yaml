@@ -24,3 +24,7 @@ PUT /api/offerStatistis/update:
   update offerStatistis set step=${data.step},time=NOW()  WHERE userId=${data.userId};
 GET /api/offerStatistis/count:
   SELECT count(*) AS 'count' FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
+POST /api/offerColler/stepOne:
+  INSERT INTO offerColler (offername,pv,cookieID,fristTime) VALUES (${data.offername},${data.pv},${data.cookieID},NOW());
+POST /api/offerColler/stepEnd:
+  update offerColler set cr=${data.cr},EndTime=NOW() WHERE cookieID = ${data.cookieID};

@@ -11,7 +11,6 @@ function best() {
     for(let key in date) {
         c[key] = async (ctx, next) => {
             let _sql = date[key];
-
             var data = ctx.request.body;
            if(key.search(reg[0])>=0) {
                data = ctx.query;
@@ -21,7 +20,6 @@ function best() {
             };
             const _date = stringEs6(_sql, data);
             const bet = await mysql(_date);
-            console.log(bet)
             ctx.rest({
                 data: bet
             });
