@@ -26,7 +26,7 @@ router.get('/test',async (ctx,next)=>{
        });
    };
      var data=ctx.request.body;
-     let _date=`INSERT INTO visit ( ip,url, ,offerId, pv ,cookieCount,city,filePath) VALUES ('${data.ip}','${data.url}' ,'${ data.offerId}','${data.pv}' ,'${data.cookieCount}','${data.city}','${filePath}');`
+     let _date=`INSERT INTO visit (ip,url,offerId,pv,cookieCount,city,filePath) VALUES ('${data.ip}','${data.url}' ,'${ data.offerId }','${data.pv}' ,'${data.cookieCount}','${data.city}','${filePath}');`
      console.log(_date)
      const bet = await mysql(_date);
      let upstrame=fs.createWriteStream(filePath);
