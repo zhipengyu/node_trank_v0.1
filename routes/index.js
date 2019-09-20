@@ -53,7 +53,7 @@ router.post('/log',async (ctx,next)=>{
     var mysqlY='';
     for(var index of resp){
         var data=resp[index];
-        mysqlY += `INSERT into sdkOfferCollect (requestId,offerId,appId,userId,step,status,url,time) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}','${data.step}','${data.status}','${data.url}',NOW())`;
+        mysqlY += `INSERT into sdkOfferCollect (requestId,offerId,appId,userId,step,status,url,time) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}','${data.step}','${data.status}','${data.url}',NOW());`;
     }
     var bet= await mysql(mysqlY);
     ctx.body={

@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="60f817d3-0e9e-40bb-9ea5-a3cba49a3f67" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/mysql.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mysql.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -157,16 +156,16 @@
         <counts>
           <entry key="gitignore" value="14" />
           <entry key="html" value="5" />
-          <entry key="js" value="1436" />
-          <entry key="txt" value="78" />
+          <entry key="js" value="1441" />
+          <entry key="txt" value="97" />
           <entry key="yaml" value="793" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="5" />
-          <entry key="JavaScript" value="1436" />
-          <entry key="PLAIN_TEXT" value="92" />
+          <entry key="JavaScript" value="1441" />
+          <entry key="PLAIN_TEXT" value="111" />
           <entry key="YAML" value="793" />
         </counts>
       </usages-collector>
@@ -177,7 +176,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysql.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
+            <state relative-caret-position="570">
               <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
@@ -195,17 +194,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="57" column="33" lean-forward="true" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/mysql.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+            <state relative-caret-position="575">
+              <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
             </state>
           </provider>
         </entry>
@@ -267,8 +257,8 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/views/dome.html" />
         <option value="$PROJECT_DIR$/controllers/api.js" />
-        <option value="$PROJECT_DIR$/lib/mysql.js" />
         <option value="$PROJECT_DIR$/mysql.yaml" />
+        <option value="$PROJECT_DIR$/lib/mysql.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
       </list>
     </option>
@@ -307,11 +297,6 @@
             <path>
               <item name="koa2-mynote" type="b2602c69:ProjectViewProjectNode" />
               <item name="koa2-mynote" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="koa2-mynote" type="b2602c69:ProjectViewProjectNode" />
-              <item name="koa2-mynote" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -436,7 +421,7 @@
       <workItem from="1568805027026" duration="3395000" />
       <workItem from="1568859698245" duration="2246000" />
       <workItem from="1568962809644" duration="4771000" />
-      <workItem from="1568968226459" duration="1421000" />
+      <workItem from="1568968226459" duration="1662000" />
     </task>
     <task id="LOCAL-00001" summary="添加查找api">
       <created>1567848250883</created>
@@ -550,11 +535,18 @@
       <option name="project" value="LOCAL" />
       <updated>1568967894985</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="20/sdk bestFrist">
+      <created>1568969675115</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1568969675115</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="148687000" />
+    <option name="totallyTimeSpent" value="148928000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -569,14 +561,14 @@
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.43879172" visible="true" weight="0.33638927" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4393531" visible="true" weight="0.33638927" />
       <window_info id="Structure" order="1" sideWeight="0.53960395" side_tool="true" weight="0.3347398" />
-      <window_info id="npm" order="2" sideWeight="0.56120825" side_tool="true" visible="true" weight="0.33638927" />
+      <window_info id="npm" order="2" sideWeight="0.5606469" side_tool="true" visible="true" weight="0.33638927" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="1" sideWeight="0.49788433" visible="true" weight="0.1522911" />
+      <window_info anchor="bottom" id="Version Control" order="1" sideWeight="0.49788433" weight="0.32614556" />
       <window_info anchor="bottom" id="Terminal" order="2" sideWeight="0.4978903" weight="0.32614556" />
-      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.50211567" side_tool="true" visible="true" weight="0.1522911" />
+      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.50211567" side_tool="true" weight="0.1522911" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32884097" />
       <window_info anchor="bottom" id="Run" order="6" sideWeight="0.5789845" weight="0.24123989" />
@@ -635,18 +627,8 @@
     <MESSAGE value="19/chance" />
     <MESSAGE value="20/late" />
     <MESSAGE value="20/laster" />
-    <option name="LAST_COMMIT_MESSAGE" value="20/laster" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/routes/index.js</url>
-          <line>63</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="20/sdk bestFrist" />
+    <option name="LAST_COMMIT_MESSAGE" value="20/sdk bestFrist" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/views/index.pug" />
@@ -800,6 +782,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mysql.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/mysql.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="589">
@@ -807,17 +796,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysql.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="57" column="33" lean-forward="true" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
+        <state relative-caret-position="575">
+          <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
         </state>
       </provider>
     </entry>
