@@ -7,7 +7,7 @@ DELETE /api/del/:id:
 PUT /api/fala:
   INSERT INTO httpDates ( requestURL,Referer,requestMethod,date,createTime) VALUES ( ${data.requestURL},${data.Referer},${data.requestMethod},${data.date},UNIX_TIMESTAMP(CURDATE()) );
 GET /api/showLoad:
-  INSERT INTO visit ( ip,url) VALUES ( ${data.ip},${data.url});
+  INSERT INTO visit ( ip,url ,offerId, pv ,cookieCount) VALUES ( ${data.ip},${data.url} ,${ data.offerId},${data.pv} ,${data.cookieCount});
 GET /api/showLoad/:ip:
   SELECT url FROM visit WHERE ip=${data.ip};
 GET /api/showCount/:ip:
