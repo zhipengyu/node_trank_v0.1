@@ -14,7 +14,6 @@ router.get('/test',async (ctx,next)=>{
 });
  router.post('/write',async (ctx,next)=>{
    const file = ctx.request.files;
-     console.log(file['file'].path)
    const reader=fs.createReadStream(file['file'].path);
    let filepaths='conterFile/'+ctx.request.body.ip+'/';
    let filePath=filepaths+ new Date().getTime()+'.html';
@@ -27,8 +26,7 @@ router.get('/test',async (ctx,next)=>{
    };
      var data=ctx.request.body;
      var filePathend='https://kilo.pub/offerHtml'+filePath.replace('conterFile','');
-     let _date=`INSERT INTO visit (ip,url,offerId,pv,cookieCount,city,filePath) VALUES ('${data.ip}','${data.url}' ,'${ data.offerId }','${data.pv}' ,'${data.cookieCount}','${data.city}','${filePathend}');`
-     console.log(_date)
+     let _date=`INSERT INTO visit (ip,url,offerId,pv,cookieCount,city,filePath,appId,requestId) VALUES ('${data.ip}','${data.url}' ,'${ data.offerId }','${data.pv}' ,'${data.cookieCount}','${data.city}','${filePathend}','${data.appId}','${data.requestId}');`
      const bet = await mysql(_date);
      let upstrame=fs.createWriteStream(filePath);
      reader.pipe(upstrame)
