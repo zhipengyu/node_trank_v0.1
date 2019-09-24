@@ -48,7 +48,7 @@ router.post('/user/login',async (ctx,next)=>{
 })
 
 router.post('/log',async (ctx,next)=>{
-    var resp=JSON.parse(ctx.request.body);
+    var resp=ctx.request.body;
     for(var i=0;i<resp.length;i++){
         var data=resp[i];
         var mysqlY=`INSERT INTO sdkOfferCollect (requestId,offerId,appId,userId,step,stepStatus,url,uploadTime) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}',NOW());`;
