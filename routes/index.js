@@ -85,10 +85,11 @@ router.get('/downLoad', async (ctx, next) => {
     await  zip.finalize();
     ctx.attachment(zipName);
     await send(ctx,zipName);
+    await fs.unlinkSync(zipName);
 });
 router.get('/json', async (ctx, next) => {
   ctx.body = {
     title: 'koa2 json'
   }
 });
-module.exports = router;
+module.exports = router
