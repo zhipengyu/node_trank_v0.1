@@ -1,6 +1,8 @@
 const router = require('koa-router')()
 const mysql=require('../lib/mysql');
 const fs=require('fs');
+const send=require('koa-send');
+const archiver=require('archiver');
 
 router.get('/', async (ctx, next) => {
   await ctx.render('index');
@@ -57,10 +59,36 @@ router.post('/log',async (ctx,next)=>{
     ctx.body={
         data:bet
     }
-})
+});
+function readdirs(url) {
+    return new Promise(( resolve, reject ) => {
+        fs.readdir(url,function (err,files) {
+            if ( err ) {
+                reject( err )
+            } else {
+                resolve( files )
+            }
+        })
+    })
+}
+router.get('/downLoad', async (ctx, next) => {
+    const filePath=`./conterFile/${ctx.request.query.ip}`;
+    const dir = await readdirs(filePath);
+    const  zipName=ctx.request.query.ip.replace(/\./g,'')+'.zip';
+    const zipStream=fs.createWriteStream(zipName);
+    const zip=archiver('zip');
+    zip.pipe(zipStream);
+    for(let i=0;i<dir.length;i++){
+        console.log(filePath+'/'+dir[i])
+        zip.append(fs.createReadStream(filePath+'/'+dir[i]), { name: dir[i]});
+    }
+    await  zip.finalize();
+    ctx.attachment(zipName);
+    await send(ctx,zipName);
+});
 router.get('/json', async (ctx, next) => {
   ctx.body = {
     title: 'koa2 json'
   }
 });
-module.exports = router
+module.exports = router;
