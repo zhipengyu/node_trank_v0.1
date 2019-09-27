@@ -36,4 +36,20 @@ GET /api/visit/getVisitDate:
 GET /api/visit/testss:
   SELECT * FROM sdkOfferCollect;
 GET /api/visit/seeCount:
-  INSERT INTO offerVisiter (cookieID,url,offerId,creat_time) VALUES (${data.cookieID},${data.url},${data.offerid},NOW())
+  INSERT INTO offerVisiter (cookieID,url,offerId,creat_time) VALUES (${data.cookieID},${data.url},${data.offerid},NOW());
+#后加
+GET /api/offerStatistis/counts:
+  SELECT count(*) AS 'count' FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
+POST /api/offerColler/stepOnes:
+  INSERT INTO offerCollers (offername,pv,cookieID,offerId,appId,fristTime) VALUES (${data.offername},${data.pv},${data.cookieID},${data.offerId},${data.appId},NOW());
+POST /api/offerColler/stepEnds:
+  update offerCollers set cr=${data.cr},EndTime=NOW() WHERE cookieID = ${data.cookieID};
+#查询后台
+GET /api/visit/getOfferss:
+  SELECT offerId FROM visit WHERE  DATE(create_time)="2019-09-23" GROUP BY offerId
+GET /api/visit/getVisitDates:
+  SELECT * FROM visiter WHERE  DATE(create_time)="2019-09-23" ORDER BY create_time limit 50;
+GET /api/visit/testsss:
+  SELECT * FROM sdkOfferCollects;
+GET /api/visit/seeCounts:
+  INSERT INTO offerVisiters (cookieID,url,offerId,creat_time) VALUES (${data.cookieID},${data.url},${data.offerid},NOW())
