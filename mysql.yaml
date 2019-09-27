@@ -34,4 +34,6 @@ GET /api/visit/getOffers:
 GET /api/visit/getVisitDate:
   SELECT * FROM visit WHERE  DATE(create_time)="2019-09-23" ORDER BY create_time limit 50;
 GET /api/visit/testss:
-  SELECT * FROM sdkOfferCollect
+  SELECT * FROM sdkOfferCollect;
+GET /api/visit/seeCount:
+  INSERT INTO offerVisiter (cookieID,url,offerId,creat_time) VALUES (${data.cookieID},${data.url},${data.offerid},NOW())
