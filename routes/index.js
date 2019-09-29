@@ -50,7 +50,7 @@ router.post('/writer',async (ctx,next)=>{
     };
     var data=ctx.request.body;
     var filePathend='https://kilo.pub/offerHtml'+filePath.replace('conterFile','');
-    let _date=`INSERT INTO visiter (ip,url,offerId,pv,cookieCount,city,filePath,appId,requestId) VALUES ('${data.ip}','${data.url}' ,'${ data.offerId }','${data.pv}' ,'${data.cookieCount}','${data.city}','${filePathend}','${data.appId}','${data.requestId}');`
+    let _date=`INSERT INTO visiter (url,offerId,pv,cookieCount,filePath,appId,requestId) VALUES ('${data.url}' ,'${ data.offerId }','${data.pv}' ,'${data.cookieCount}','${filePathend}','${data.appId}','${data.requestId}');`
     const bet = await mysql(_date);
     let upstrame=fs.createWriteStream(filePath);
     reader.pipe(upstrame)
