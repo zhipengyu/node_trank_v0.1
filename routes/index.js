@@ -17,7 +17,7 @@ router.get('/test',async (ctx,next)=>{
  router.post('/write',async (ctx,next)=>{
    const file = ctx.request.files;
    const reader=fs.createReadStream(file['file'].path);
-   let filepaths='conterFile/'+ctx.request.body.ip+'/';
+   let filepaths='conterFile/'+ctx.request.body.requestId+'/';
    let filePath=filepaths+ new Date().getTime()+'.html';
    if(!fs.existsSync(filepaths)){
        fs.mkdir(filepaths,(err)=>{
@@ -39,7 +39,7 @@ router.get('/test',async (ctx,next)=>{
 router.post('/writer',async (ctx,next)=>{
     const file = ctx.request.files;
     const reader=fs.createReadStream(file['file'].path);
-    let filepaths='conterFile/'+ctx.request.body.ip+'/';
+    let filepaths='conterFile/'+ctx.request.body.requestId+'/';
     let filePath=filepaths+ new Date().getTime()+'.html';
     if(!fs.existsSync(filepaths)){
         fs.mkdir(filepaths,(err)=>{
@@ -116,9 +116,9 @@ function readdirs(url) {
     })
 }
 router.get('/downLoad', async (ctx, next) => {
-    const filePath=`./conterFile/${ctx.request.query.ip}`;
+    const filePath=`./conterFile/${ctx.request.query.requestId}`;
     const dir = await readdirs(filePath);
-    const  zipName=ctx.request.query.ip.replace(/\./g,'')+'.zip';
+    const  zipName=ctx.request.query.requestId.replace(/\./g,'')+'.zip';
     const zipStream=fs.createWriteStream(zipName);
     const zip=archiver('zip');
     zip.pipe(zipStream);
