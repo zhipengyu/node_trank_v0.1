@@ -86,7 +86,7 @@ router.post('/log',async (ctx,next)=>{
     var resp=ctx.request.body;
     for(var i=0;i<resp.length;i++){
         var data=resp[i];
-        var mysqlY=`INSERT INTO sdkOfferCollect (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW());`;
+        var mysqlY=`INSERT INTO sdkOfferCollect (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime,version) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW(),${data.version});`;
         var bet= await mysql(mysqlY);
     }
     ctx.body={
@@ -97,7 +97,7 @@ router.post('/logs',async (ctx,next)=>{
     var resp=ctx.request.body;
     for(var i=0;i<resp.length;i++){
         var data=resp[i];
-        var mysqlY=`INSERT INTO sdkOfferCollects (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW());`;
+        var mysqlY=`INSERT INTO sdkOfferCollects (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime,version) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW(),${data.version});`;
         var bet= await mysql(mysqlY);
     }
     ctx.body={
