@@ -36,7 +36,7 @@ GET /api/visit/getVisitDate:
 GET /api/visit/testss:
   SELECT * FROM sdkOfferCollect;
 GET /api/visit/seeCount:
-  INSERT INTO offerVisiter (cookieID,url,offerId,creat_time) VALUES (${data.cookieID},${data.url},${data.offerId},NOW());
+  INSERT INTO offerVisiter (cookieID,url,offerId,creat_time,appId) VALUES (${data.cookieID},${data.url},${data.offerId},NOW(),${data.appId});
 #后加
 GET /api/offerStatistis/counts:
   SELECT count(*) AS 'count' FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
@@ -52,4 +52,4 @@ GET /api/visit/getVisitDates:
 GET /api/visit/testsss:
   SELECT * FROM sdkOfferCollects;
 GET /api/visit/seeCounts:
-  INSERT INTO offerVisiters (cookieID,url,offerId,creat_time) VALUES (${data.cookieID},${data.url},${data.offerId},NOW())
+  INSERT INTO offerVisiters (cookieID,url,offerId,creat_time,appId) VALUES (${data.cookieID},${data.url},${data.offerId},NOW(),${data.appId})
