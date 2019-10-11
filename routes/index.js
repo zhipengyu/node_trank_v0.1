@@ -98,7 +98,7 @@ router.post('/logs',async (ctx,next)=>{
     var resp=ctx.request.body;
     for(var i=0;i<resp.length;i++){
         var data=resp[i];
-        var mysqlY=`INSERT INTO sdkOfferCollect (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime,version,packageName) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW(),${data.version},'${data.packageName}');`;
+        var mysqlY=`INSERT INTO sdkOfferCollects (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime,version,packageName) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW(),${data.version},'${data.packageName}');`;
         var bet= await mysql(mysqlY);
     }
     ctx.body={
