@@ -15,8 +15,9 @@ router.get('/test',async (ctx,next)=>{
   await  ctx.render('dome');
 });
  router.post('/write',async (ctx,next)=>{
-   const file = ctx.request.files;
-   const reader=fs.createReadStream(file['file'].path);
+     const string=ctx.request.body.file;
+   // const file = ctx.request.files;
+   // const reader=fs.createReadStream(file['file'].path);
    let filepaths='conterFile/'+ctx.request.body.requestId+'/';
    let filePath=filepaths+ new Date().getTime()+'.html';
    if(!fs.existsSync(filepaths)){
@@ -31,14 +32,14 @@ router.get('/test',async (ctx,next)=>{
      let _date=`INSERT INTO visit (ip,url,offerId,pv,cookieCount,city,filePath,appId,requestId) VALUES ('${data.ip}','${data.url}' ,'${ data.offerId }','${data.pv}' ,'${data.cookieCount}','${data.city}','${filePathend}','${data.appId}','${data.requestId}');`
      const bet = await mysql(_date);
      let upstrame=fs.createWriteStream(filePath);
-     reader.pipe(upstrame)
+     upstrame.write(string);
+     // reader.pipe(upstrame)
      ctx.body={
          data:bet
      }
  })
 router.post('/writer',async (ctx,next)=>{
-    const file = ctx.request.files;
-    const reader=fs.createReadStream(file['file'].path);
+    const string=ctx.request.body.file;
     let filepaths='conterFile/'+ctx.request.body.requestId+'/';
     let filePath=filepaths+ new Date().getTime()+'.html';
     if(!fs.existsSync(filepaths)){
@@ -53,7 +54,7 @@ router.post('/writer',async (ctx,next)=>{
     let _date=`INSERT INTO visiter (url,offerId,pv,cookieCount,filePath,appId,requestId) VALUES ('${data.url}' ,'${ data.offerId }','${data.pv}' ,'${data.cookieCount}','${filePathend}','${data.appId}','${data.requestId}');`
     const bet = await mysql(_date);
     let upstrame=fs.createWriteStream(filePath);
-    reader.pipe(upstrame)
+    upstrame.write(string);
     ctx.body={
         data:bet
     }
@@ -75,7 +76,7 @@ router.post('/loger',async (ctx,next)=>{
     var resp=ctx.request.body;
     for(var i=0;i<resp.length;i++){
         var data=resp[i];
-        var mysqlY=`INSERT INTO sdkOfferCollect (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW());`;
+        var mysqlY=`INSERT INTO sdkOfferCollect (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime,version,packageName) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW(),${data.version},'${data.packageName}');`;
         var bet= await mysql(mysqlY);
     }
     ctx.body={
@@ -86,7 +87,7 @@ router.post('/log',async (ctx,next)=>{
     var resp=ctx.request.body;
     for(var i=0;i<resp.length;i++){
         var data=resp[i];
-        var mysqlY=`INSERT INTO sdkOfferCollect (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime,version) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW(),${data.version});`;
+        var mysqlY=`INSERT INTO sdkOfferCollect (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime,version,packageName) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW(),${data.version},'${data.packageName}');`;
         var bet= await mysql(mysqlY);
     }
     ctx.body={
@@ -97,7 +98,7 @@ router.post('/logs',async (ctx,next)=>{
     var resp=ctx.request.body;
     for(var i=0;i<resp.length;i++){
         var data=resp[i];
-        var mysqlY=`INSERT INTO sdkOfferCollects (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime,version) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW(),${data.version});`;
+        var mysqlY=`INSERT INTO sdkOfferCollect (requestId,offerId,appId,userId,step,stepStatus,url,createTime,uploadTime,version,packageName) VALUES ('${data.requestId}','${data.offerId}','${data.appId}','${data.userId}',${data.step},${data.stepStatus},'${data.url}','${data.createTime}',NOW(),${data.version},'${data.packageName}');`;
         var bet= await mysql(mysqlY);
     }
     ctx.body={
