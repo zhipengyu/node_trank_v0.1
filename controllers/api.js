@@ -15,7 +15,7 @@ function best() {
            if(key.search(reg[0])>=0) {
                data = ctx.query;
            }
-            if(!data&&ctx.params.id){
+            if(!data&&ctx.params.offerId){
                 data=ctx.params;
             };
             const _date = stringEs6(_sql, data);
