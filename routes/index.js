@@ -16,8 +16,7 @@ router.get('/test',async (ctx,next)=>{
 });
  router.post('/write',async (ctx,next)=>{
      const string=ctx.request.body.file;
-   // const file = ctx.request.files;
-   // const reader=fs.createReadStream(file['file'].path);
+     console.log(ctx.request.body)
    let filepaths='conterFile/'+ctx.request.body.requestId+'/';
    let filePath=filepaths+ new Date().getTime()+'.html';
    if(!fs.existsSync(filepaths)){
