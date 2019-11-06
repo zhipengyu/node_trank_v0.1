@@ -27,7 +27,7 @@ GET /api/offerStatistis/count:
 POST /api/offerColler/stepOne:
   INSERT INTO offerColler (offername,pv,cookieID,offerId,appId,fristTime) VALUES (${data.offername},${data.pv},${data.cookieID},${data.offerId},${data.appId},NOW());
 POST /api/offerColler/stepEnd:
-  update offerColler set cr=${data.cr},EndTime=NOW() WHERE cookieID = ${data.cookieID};
+  update offerColler set cr=${data.cr},code=${data.code},EndTime=NOW() WHERE cookieID = ${data.cookieID};
 #查询后台
 GET /api/visit/getOffers:
   SELECT offerId FROM visit WHERE  DATE(create_time)="2019-09-23" GROUP BY offerId
