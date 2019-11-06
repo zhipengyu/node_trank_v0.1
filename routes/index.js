@@ -132,6 +132,15 @@ router.get('/downLoad', async (ctx, next) => {
     await send(ctx,zipName);
     await fs.unlinkSync(zipName);
 });
+router.get("/getSms",async (ctx,next)=>{
+        // var dest=parseInt(Math.random()*99999000+1000);
+    var string='';arr=4+parseInt(Math.random()*5);
+    for (var i=0;i<arr;i++){
+        var det=parseInt(Math.random()*9);
+        string+=det?det:1;
+    }
+    ctx.body=`你好！你的验证码为 ${string},非本人操作,请勿给他人`;
+});
 router.get('/json', async (ctx, next) => {
   ctx.body = {
     title: 'koa2 json'
