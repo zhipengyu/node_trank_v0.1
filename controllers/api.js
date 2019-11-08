@@ -33,7 +33,7 @@ function getUrl(url){
 }
 
 function stringEs6(string,data){
-    const reg=/\$\{(\S+?)\}/gm;
+    const reg=/\$\{([\S\s]+?)\}/gm;
     let newString='';
     newString=string.replace(reg,function ($,$1) {
         try {
