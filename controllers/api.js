@@ -3,7 +3,11 @@ const APIError = require('../rest').APIError;
 const mysql=require('../lib/mysql');
 const YAML=require('yamljs');
 const fs=require('fs')
-const date=YAML.parse(fs.readFileSync('./mysql.yaml').toString());
+
+// console.log(YAML.parse(fs.readFileSync('./mysql.yaml')))
+//  const date=YAML.parse(fs.readFileSync('./mysql.yaml').toString());
+ var date=YAML.load('./mysql.yaml');
+ console.log(date)
 var c={};
 //有bug=-=
 function best() {
