@@ -60,6 +60,23 @@ GET /api/sdkPvisit/getCounts:
 GET /api/visit/getUrls:
   SELECT  url,COUNT(DISTINCT requestId) AS counts FROM visit  WHERE  offerId=IF(${data.offerId}!='',${data.offerId},offerId) AND appId =IF(${data.appId}!='',${data.appId},appId)  AND create_time BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY SUBSTRING_INDEX(url,'?',1);
 POST /api/permission/getIde:
-  INSERT INTO permissionCollect (userId,requestId,canNotify,networkType) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED));
+  INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone});
 POST /api/permissions/getIde:
-  INSERT INTO permissionCollects (userId,requestId,canNotify,networkType) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED));
+  INSERT INTO permissionCollects (userId,requestId,canNotify,networkType,phoneGetType,phone) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone});
+#获取appId  
+GET /api/permissions/getAppId:
+  SELECT appId FROM sdkOfferCollect GROUP BY appId;
+#获取offerId 根据appId
+GET /api/permissions/getOfferId:
+  SELECT offerId FROM sdkOfferCollect WHERE appId=${data.appId} GROUP BY offerId;
+#根据request查询请求条数
+GET /api/permissions/seacher:
+  SELECT  s.offerId AS offerId,s.appId AS appId,s.userId AS userId,s.requestId AS requestId,p.canNotify,p.networkType,s.uploadTime AS uploadTime  FROM  (SELECT requestId,networkType,canNotify FROM permissionCollect WHERE canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND IF(CONVERT(${data.networkType},SIGNED)>0,IF(${data.networkType}='1',networkType=2,networkType!=2),TRUE)) p  LEFT JOIN(SELECT offerId,appId,requestId,uploadTime,userId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId ORDER BY s.userId,s.uploadTime limit @{(data.currentPage-1)*data.page_size},@{data.page_size*data.currentPage};
+GET /api/permissions/getTools:
+  SELECT COUNT(s.offerId) FROM (SELECT requestId FROM permissionCollect WHERE canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND IF(CONVERT(${data.networkType},SIGNED)>0,IF(${data.networkType}='1',networkType=2,networkType!=2),TRUE)) p  LEFT JOIN(SELECT offerId,requestId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId;
+#根据request查询查询详情页
+GET /api/permissions/details:
+  SELECT uploadTime,step,stepStatus,s.url,filePath FROM (SELECT requestId,step,stepStatus,url,uploadTime FROM sdkOfferCollect WHERE requestId=${data.requestId}) s LEFT JOIN (SELECT requestId,filePath,url FROM visit) v ON v.requestId = s.requestId AND v.url =s.url ORDER BY uploadTime;
+#根据appID 以及时间查询统计用户数 和pv
+GET /api/permissions/tootalPV:
+  (SELECT offerId,appId,COUNT(offerId) AS totalPV,COUNT(DISTINCT userId)AS totalUserCount,SUM(IF(networkType!=2,0,1)) AS mobilePV,SUM(IF(networkType=2,0,1))AS wifiPV,COUNT(DISTINCT CASE WHEN networkType!=2 THEN userId END)AS mobileUserCount,COUNT(DISTINCT CASE WHEN networkType=2 THEN userId END)AS wifiUserCount FROM(SELECT visit.appId AS appId,visit.offerId AS offerId,permissionCollect.userId AS userId,permissionCollect.networkType AS networkType,permissionCollect.canNotify AS canNotify FROM(SELECT*FROM permissionCollect) permissionCollect LEFT JOIN (SELECT offerId,requestId,appId FROM sdkOfferCollect WHERE appId=${data.appId}AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000)AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY requestId) visit ON permissionCollect.requestId=visit.requestId) s WHERE !ISNULL(s.offerId) GROUP BY s.offerId);

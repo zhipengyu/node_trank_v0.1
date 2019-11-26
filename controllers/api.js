@@ -38,10 +38,17 @@ function getUrl(url){
 
 function stringEs6(string,data){
     const reg=/\$\{([\S\s]+?)\}/gm;
+    const reg1=/\@\{([\S\s]+?)\}/gm;
     let newString='';
     newString=string.replace(reg,function ($,$1) {
         try {
             return `\'${eval($1)}\'`;
+        }catch (e) {
+        }
+    })
+    newString=newString.replace(reg1,function ($,$1) {
+        try {
+            return `${eval($1)}`;
         }catch (e) {
         }
     })
