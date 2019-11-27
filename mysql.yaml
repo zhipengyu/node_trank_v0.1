@@ -94,4 +94,4 @@ GET /api/pinInject/getIde:
   update pinCodeCollect set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};
 #短信搜索
 GET /api/pinInject/getMassages:
-  SELECT appId,requestId,offerId,userId,pinInject,message,from_unixtime(uploadTime/1000, '%Y-%m-%d %H:%i:%S') AS uploadTime FROM pinCodeCollects WHERE appId = ${data.appId} AND offerId = ${data.offerId} AND uploadTime < @{data.timeEnd} AND uploadTime >= @{data.timeStart} ORDER BY uploadTime,userId; 
+  SELECT appId,requestId,offerId,userId,pinInject,message,from_unixtime(uploadTime/1000, '%Y-%m-%d %H:%i:%S') AS uploadTime FROM pinCodeCollect WHERE appId = ${data.appId} AND offerId = ${data.offerId} AND uploadTime < @{data.timeEnd} AND uploadTime >= @{data.timeStart} ORDER BY uploadTime,userId; 
