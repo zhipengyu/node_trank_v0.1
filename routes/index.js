@@ -5,7 +5,9 @@ const send=require('koa-send');
 const archiver=require('archiver');
 
 router.get('/', async (ctx, next) => {
-  await ctx.render('index');
+    console.log(ctx);
+    await ctx.render('index');
+    console.log(ctx);
 });
 
 router.get('/string', async (ctx, next) => {

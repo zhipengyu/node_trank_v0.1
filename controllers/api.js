@@ -3,13 +3,10 @@ const APIError = require('../rest').APIError;
 const mysql=require('../lib/mysql');
 const YAML=require('yamljs');
 const fs=require('fs')
-
-// console.log(YAML.parse(fs.readFileSync('./mysql.yaml')))
-//  const date=YAML.parse(fs.readFileSync('./mysql.yaml').toString());
  var date=YAML.load('./mysql.yaml');
  console.log(date)
 var c={};
-//有bug=-=
+
 function best() {
     var reg=[/^GET/gi,/^DELETE/gi,/^POST/gi,/^PUT/gi]
     for(let key in date) {
