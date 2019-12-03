@@ -60,9 +60,9 @@ GET /api/sdkPvisit/getCounts:
 GET /api/visit/getUrls:
   SELECT  url,COUNT(DISTINCT requestId) AS counts FROM visit  WHERE  offerId=IF(${data.offerId}!='',${data.offerId},offerId) AND appId =IF(${data.appId}!='',${data.appId},appId)  AND create_time BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY SUBSTRING_INDEX(url,'?',1);
 POST /api/permission/getIde:
-  INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.imsi},${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone});
+  INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone},${data.imsi});
 POST /api/permissions/getIde:
-  INSERT INTO permissionCollects (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.imsi},${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone});
+  INSERT INTO permissionCollects (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone},${data.imsi});
 #获取appId  
 GET /api/permissions/getAppId:
   SELECT appId FROM sdkOfferCollect GROUP BY appId;
@@ -71,9 +71,9 @@ GET /api/permissions/getOfferId:
   SELECT offerId FROM sdkOfferCollect WHERE appId=${data.appId} GROUP BY offerId;
 #根据request查询请求条数
 GET /api/permissions/seacher: |
-  SELECT  s.offerId AS offerId,s.appId AS appId,s.userId AS userId,s.requestId AS requestId,p.canNotify,p.networkType,s.uploadTime AS uploadTime,p.imsi  FROM  (SELECT requestId,networkType,canNotify,imsi FROM permissionCollect WHERE
+  SELECT  s.offerId AS offerId,s.appId AS appId,s.userId AS userId,s.requestId AS requestId,p.imsi,p.canNotify,p.networkType,s.uploadTime AS uploadTime  FROM  (SELECT requestId,networkType,canNotify,imsi FROM permissionCollect WHERE
   canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND 
-  IF(@{da.networkType}=0,networkType!=2,networkType=2),TRUE)) p  LEFT JOIN(SELECT offerId,appId,requestId,uploadTime,userId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId ORDER BY s.uploadTime DESC,s.userId limit @{(data.currentPage-1)*data.pageata.networkType}>=0,IF(@{dat_size},@{data.page_size*data.currentPage};
+  IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)) p  LEFT JOIN(SELECT offerId,appId,requestId,uploadTime,userId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId ORDER BY s.uploadTime DESC,s.userId limit @{(data.currentPage-1)*data.page_size},@{data.page_size*data.currentPage};
 GET /api/permissions/getTools:
   SELECT COUNT(s.offerId) FROM (SELECT requestId FROM permissionCollect WHERE canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)) p  LEFT JOIN(SELECT offerId,requestId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId;
 #根据request查询查询详情页
