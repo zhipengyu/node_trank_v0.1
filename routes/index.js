@@ -3,6 +3,7 @@ const mysql=require('../lib/mysql');
 const fs=require('fs');
 const send=require('koa-send');
 const archiver=require('archiver');
+const carrier=require('../public/static/carrier')
 
 router.get('/', async (ctx, next) => {
   await ctx.render('index');
@@ -16,7 +17,6 @@ router.get('/test',async (ctx,next)=>{
 });
  router.post('/write',async (ctx,next)=>{
      const string=ctx.request.body.file;
-     console.log(ctx.request.body)
    let filepaths='conterFile/'+ctx.request.body.requestId+'/';
    let filePath=filepaths+ new Date().getTime()+'.html';
    if(!fs.existsSync(filepaths)){
@@ -146,4 +146,23 @@ router.get('/json', async (ctx, next) => {
     title: 'koa2 json'
   }
 });
+
+router.post('/api/permission/getIde',async(ctx, next)=>{
+    var data=ctx.request.body;
+    var imsi=carrier.seache(data.imsi);
+    let _date=`INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT('${data.networkType}',SIGNED),${data.phoneGetType},'${data.phone}','${imsi.carrier}');`
+    var bet= await mysql(_date);
+    ctx.body={
+        data:bet
+    }
+})
+router.post('/api/permissions/getIde',async(ctx, next)=>{
+    var data=ctx.request.body;
+    var imsi=carrier.seache(data.imsi);
+    let _date=`INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT('${data.networkType}',SIGNED),${data.phoneGetType},'${data.phone}','${imsi.carrier}');`
+    var bet= await mysql(_date);
+    ctx.body={
+        data:bet
+    }
+})
 module.exports = router

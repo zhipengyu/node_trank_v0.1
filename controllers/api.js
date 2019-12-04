@@ -4,7 +4,6 @@ const mysql=require('../lib/mysql');
 const YAML=require('yamljs');
 const fs=require('fs')
  var date=YAML.load('./mysql.yaml');
- console.log(date)
 var c={};
 
 function best() {
