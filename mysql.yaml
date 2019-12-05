@@ -1,97 +1,62 @@
-GET /api/products:
-  SELECT * FROM httpDates;
-GET /api/products/:id:
-  SELECT * FROM httpDates WHERE id=${data.id};
-DELETE /api/del/:id:
-  DELETE FROM httpDates WHERE id=${data.id};
-PUT /api/fala:
-  INSERT INTO httpDates ( requestURL,Referer,requestMethod,date,createTime) VALUES ( ${data.requestURL},${data.Referer},${data.requestMethod},${data.date},UNIX_TIMESTAMP(CURDATE()) );
-GET /api/showLoad:
-  INSERT INTO visit ( ip,url) VALUES ( ${data.ip},${data.url});
-GET /api/showLoad/:ip:
-  SELECT url FROM visit WHERE ip=${data.ip};
-GET /api/showCount/:ip:
-  SELECT count(*) AS 'count',url FROM visit WHERE ip=${data.ip};
-POST /api/player:
-  INSERT INTO testCollet ( combo,gift,quantity,firstname,telephone,country_id,address_1,postcode,email,facebook,paytype,msg,total,product_id) VALUES ( ${JSON.stringify(data.combo)},${JSON.stringify(data.gift)},${data.quantity},${data.firstname},${data.telephone},${data.country_id},${data.address_1},${data.postcode},${data.email},${data.facebook},${data.paytype},${data.msg},${data.total},${data.product_id});
-GET /api/players:
-  SELECT * FROM testCollet;
-POST /api/offerStatistis:
-  INSERT INTO offerStatistis ( offerid,appid,step,userId,totalstep,time) VALUES ( ${data.offerid},${data.appid},${data.step},${data.userId},${data.totalstep},NOW());
-GET /api/offerStatistis/Search:
-  SELECT * FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
-PUT /api/offerStatistis/update:
-  update offerStatistis set step=${data.step},time=NOW()  WHERE userId=${data.userId};
-GET /api/offerStatistis/count:
-  SELECT count(*) AS 'count' FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
-POST /api/offerColler/stepOne:
-  INSERT INTO offerColler (offername,pv,cookieID,offerId,appId,fristTime) VALUES (${data.offername},${data.pv},${data.cookieID},${data.offerId},${data.appId},NOW());
-POST /api/offerColler/stepEnd:
-  update offerColler set cr=${data.cr},code=${data.code},EndTime=NOW() WHERE cookieID = ${data.cookieID};
+GET /api/products: SELECT * FROM httpDates;
+GET /api/products/:id: SELECT * FROM httpDates WHERE id=${data.id};
+DELETE /api/del/:id: DELETE FROM httpDates WHERE id=${data.id};
+PUT /api/fala: INSERT INTO httpDates ( requestURL,Referer,requestMethod,date,createTime) VALUES ( ${data.requestURL},${data.Referer},${data.requestMethod},${data.date},UNIX_TIMESTAMP(CURDATE()) );
+GET /api/showLoad: INSERT INTO visit ( ip,url) VALUES ( ${data.ip},${data.url});
+GET /api/showLoad/:ip: SELECT url FROM visit WHERE ip=${data.ip};
+GET /api/showCount/:ip: SELECT count(*) AS 'count',url FROM visit WHERE ip=${data.ip};
+POST /api/player: INSERT INTO testCollet ( combo,gift,quantity,firstname,telephone,country_id,address_1,postcode,email,facebook,paytype,msg,total,product_id) VALUES ( ${JSON.stringify(data.combo)},${JSON.stringify(data.gift)},${data.quantity},${data.firstname},${data.telephone},${data.country_id},${data.address_1},${data.postcode},${data.email},${data.facebook},${data.paytype},${data.msg},${data.total},${data.product_id});
+GET /api/players: SELECT * FROM testCollet;
+POST /api/offerStatistis: INSERT INTO offerStatistis ( offerid,appid,step,userId,totalstep,time) VALUES ( ${data.offerid},${data.appid},${data.step},${data.userId},${data.totalstep},NOW());
+GET /api/offerStatistis/Search: SELECT * FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
+PUT /api/offerStatistis/update: update offerStatistis set step=${data.step},time=NOW()  WHERE userId=${data.userId};
+GET /api/offerStatistis/count: SELECT count(*) AS 'count' FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
+POST /api/offerColler/stepOne: INSERT INTO offerColler (offername,pv,cookieID,offerId,appId,fristTime) VALUES (${data.offername},${data.pv},${data.cookieID},${data.offerId},${data.appId},NOW());
+POST /api/offerColler/stepEnd: update offerColler set cr=${data.cr},code=${data.code},EndTime=NOW() WHERE cookieID = ${data.cookieID};
 #查询后台
-GET /api/visit/getOffers:
-  SELECT offerId FROM visit WHERE  DATE(create_time)="2019-09-23" GROUP BY offerId
-GET /api/visit/getVisitDate:
-  SELECT * FROM visit WHERE  DATE(create_time)="2019-09-23" ORDER BY create_time limit 50;
-GET /api/visit/testss:
-  SELECT * FROM sdkOfferCollect;
-GET /api/visit/seeCount:
-  INSERT INTO offerVisiter (cookieID,url,offerId,creat_time,appId) VALUES (${data.cookieID},${data.url},${data.offerId},NOW(),${data.appId});
+GET /api/visit/getOffers: SELECT offerId FROM visit WHERE  DATE(create_time)="2019-09-23" GROUP BY offerId
+GET /api/visit/getVisitDate: SELECT * FROM visit WHERE  DATE(create_time)="2019-09-23" ORDER BY create_time limit 50;
+GET /api/visit/testss: SELECT * FROM sdkOfferCollect;
+GET /api/visit/seeCount: INSERT INTO offerVisiter (cookieID,url,offerId,creat_time,appId) VALUES (${data.cookieID},${data.url},${data.offerId},NOW(),${data.appId});
 #后加
-GET /api/offerStatistis/counts:
-  SELECT count(*) AS 'count' FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
-POST /api/offerColler/stepOnes:
-  INSERT INTO offerCollers (offername,pv,cookieID,offerId,appId,fristTime) VALUES (${data.offername},${data.pv},${data.cookieID},${data.offerId},${data.appId},NOW());
-POST /api/offerColler/stepEnds:
-  update offerCollers set cr=${data.cr},EndTime=NOW() WHERE cookieID = ${data.cookieID};
+GET /api/offerStatistis/counts: SELECT count(*) AS 'count' FROM offerStatistis WHERER appid=${data.appid} or userId=${data.userId} or step=${data.step};
+POST /api/offerColler/stepOnes: INSERT INTO offerCollers (offername,pv,cookieID,offerId,appId,fristTime) VALUES (${data.offername},${data.pv},${data.cookieID},${data.offerId},${data.appId},NOW());
+POST /api/offerColler/stepEnds: update offerCollers set cr=${data.cr},EndTime=NOW() WHERE cookieID = ${data.cookieID};
 #查询后台
-GET /api/visit/getOfferss:
-  SELECT offerId FROM visit WHERE  DATE(create_time)="2019-09-23" GROUP BY offerId
-GET /api/visit/getVisitDates:
-  SELECT * FROM visiter WHERE  DATE(create_time)="2019-09-23" ORDER BY create_time limit 50;
-GET /api/visit/testsss:
-  SELECT * FROM sdkOfferCollects;
-GET /api/visit/seeCounts:
-  INSERT INTO offerVisiters (cookieID,url,offerId,creat_time,appId) VALUES (${data.cookieID},${data.url},${data.offerId},NOW(),${data.appId})
-GET /api/sdk/getUrls:
-  SELECT  url,COUNT(DISTINCT requestId) AS counts FROM sdkOfferCollect  WHERE  offerId=IF(${data.offerId}!='',${data.offerId},offerId) AND appId =IF(${data.appId}!='',${data.appId},appId)  AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY SUBSTRING_INDEX(url,'?',1);
-GET /api/sdkPvisit/getCounts:
-  SELECT sdk.offerId AS offerId,sdk.appId AS appId,sdk.sdkPv AS sdkPv,sdk.sdkUrl1 AS sdkUrl1,sdk.sdkUrl2 AS sdkUrl2,sdk.sdkUrl3 AS sdkUrl3,sdk.sdkjs1 AS sdkjs1,sdk.sdkjs2 AS sdkjs2,sdk.sdkjs3 AS sdkjs3,IFNULL(e.pv,0) AS visitPv,IFNULL(e.url1,0) AS visitUrl1,IFNULL(e.url2,0) AS visitUrl2,IFNULL(e.url3,0) AS visitUrl3 FROM (SELECT sdks.appId,sdks.offerId,SUM(IF(sdks.sdkPv=0,0,1)) AS sdkPv,SUM(IF(sdks.url1=0,0,1)) AS sdkUrl1,SUM(IF(sdks.url2=0,0,1)) AS sdkUrl2,SUM(IF(sdks.url3=0,0,1)) AS sdkUrl3,SUM(IF(sdks.sdkjs1=0,0,1)) AS sdkjs1,SUM(IF(sdks.sdkjs2=0,0,1)) AS sdkjs2,SUM(IF(sdks.sdkjs3=0,0,1)) AS sdkjs3 FROM (SELECT appId,offerId,requestId,SUM(IF(url REGEXP ${data.url1},1,0)) AS url1,SUM(IF(url REGEXP '^http://api.inbvur.com/click',1,0)) AS sdkPv,SUM(IF(url REGEXP ${data.url2},1,0)) AS url2,SUM(IF(url REGEXP ${data.url3},1,0)) AS url3,SUM(IF(url LIKE ${'1|js executed|'+data.url1+'%'}, 1, 0)) AS sdkjs1,SUM(IF(url LIKE ${'2|js executed|'+data.url2+'%'}, 1, 0)) AS sdkjs2,SUM(IF(url LIKE ${'3|js executed|'+data.url3+'%'}, 1, 0)) AS sdkjs3 FROM sdkOfferCollect WHERE uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY offerId,requestId) sdks GROUP BY sdks.offerId) sdk LEFT JOIN (SELECT appId,offerId,COUNT(DISTINCT requestId) AS pv,SUM(IF(url REGEXP ${data.url1},1,0)) AS url1,SUM(IF(url REGEXP ${data.url2},1,0)) AS url2,SUM(IF(url REGEXP ${data.url3},1,0)) AS url3 FROM visit  WHERE  create_time BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000)  GROUP BY offerId) e ON e.offerId=sdk.offerId WHERE sdk.offerId=IF(${data.offerId}!='',${data.offerId},sdk.offerId) AND sdk.appId =IF(${data.appId}!='',${data.appId},sdk.appId);
-GET /api/visit/getUrls:
-  SELECT  url,COUNT(DISTINCT requestId) AS counts FROM visit  WHERE  offerId=IF(${data.offerId}!='',${data.offerId},offerId) AND appId =IF(${data.appId}!='',${data.appId},appId)  AND create_time BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY SUBSTRING_INDEX(url,'?',1);
+GET /api/visit/getOfferss: SELECT offerId FROM visit WHERE  DATE(create_time)="2019-09-23" GROUP BY offerId
+GET /api/visit/getVisitDates: SELECT * FROM visiter WHERE  DATE(create_time)="2019-09-23" ORDER BY create_time limit 50;
+GET /api/visit/testsss: SELECT * FROM sdkOfferCollects;
+GET /api/visit/seeCounts: INSERT INTO offerVisiters (cookieID,url,offerId,creat_time,appId) VALUES (${data.cookieID},${data.url},${data.offerId},NOW(),${data.appId})
+GET /api/sdk/getUrls: SELECT  url,COUNT(DISTINCT requestId) AS counts FROM sdkOfferCollect  WHERE  offerId=IF(${data.offerId}!='',${data.offerId},offerId) AND appId =IF(${data.appId}!='',${data.appId},appId)  AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY SUBSTRING_INDEX(url,'?',1);
+GET /api/sdkPvisit/getCounts: SELECT sdk.offerId AS offerId,sdk.appId AS appId,sdk.sdkPv AS sdkPv,sdk.sdkUrl1 AS sdkUrl1,sdk.sdkUrl2 AS sdkUrl2,sdk.sdkUrl3 AS sdkUrl3,sdk.sdkjs1 AS sdkjs1,sdk.sdkjs2 AS sdkjs2,sdk.sdkjs3 AS sdkjs3,IFNULL(e.pv,0) AS visitPv,IFNULL(e.url1,0) AS visitUrl1,IFNULL(e.url2,0) AS visitUrl2,IFNULL(e.url3,0) AS visitUrl3 FROM (SELECT sdks.appId,sdks.offerId,SUM(IF(sdks.sdkPv=0,0,1)) AS sdkPv,SUM(IF(sdks.url1=0,0,1)) AS sdkUrl1,SUM(IF(sdks.url2=0,0,1)) AS sdkUrl2,SUM(IF(sdks.url3=0,0,1)) AS sdkUrl3,SUM(IF(sdks.sdkjs1=0,0,1)) AS sdkjs1,SUM(IF(sdks.sdkjs2=0,0,1)) AS sdkjs2,SUM(IF(sdks.sdkjs3=0,0,1)) AS sdkjs3 FROM (SELECT appId,offerId,requestId,SUM(IF(url REGEXP ${data.url1},1,0)) AS url1,SUM(IF(url REGEXP '^http://api.inbvur.com/click',1,0)) AS sdkPv,SUM(IF(url REGEXP ${data.url2},1,0)) AS url2,SUM(IF(url REGEXP ${data.url3},1,0)) AS url3,SUM(IF(url LIKE ${'1|js executed|'+data.url1+'%'}, 1, 0)) AS sdkjs1,SUM(IF(url LIKE ${'2|js executed|'+data.url2+'%'}, 1, 0)) AS sdkjs2,SUM(IF(url LIKE ${'3|js executed|'+data.url3+'%'}, 1, 0)) AS sdkjs3 FROM sdkOfferCollect WHERE uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY offerId,requestId) sdks GROUP BY sdks.offerId) sdk LEFT JOIN (SELECT appId,offerId,COUNT(DISTINCT requestId) AS pv,SUM(IF(url REGEXP ${data.url1},1,0)) AS url1,SUM(IF(url REGEXP ${data.url2},1,0)) AS url2,SUM(IF(url REGEXP ${data.url3},1,0)) AS url3 FROM visit  WHERE  create_time BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000)  GROUP BY offerId) e ON e.offerId=sdk.offerId WHERE sdk.offerId=IF(${data.offerId}!='',${data.offerId},sdk.offerId) AND sdk.appId =IF(${data.appId}!='',${data.appId},sdk.appId);
+GET /api/visit/getUrls: SELECT  url,COUNT(DISTINCT requestId) AS counts FROM visit  WHERE  offerId=IF(${data.offerId}!='',${data.offerId},offerId) AND appId =IF(${data.appId}!='',${data.appId},appId)  AND create_time BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY SUBSTRING_INDEX(url,'?',1);
 #POST /api/permission/getIde:
-  #INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone},${data.imsi});
+#INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone},${data.imsi});
 #POST /api/permissions/getIde:
-  #INSERT INTO permissionCollects (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone},${data.imsi});
-#获取appId  
-GET /api/permissions/getAppId:
-  SELECT appId FROM sdkOfferCollect GROUP BY appId;
+#INSERT INTO permissionCollects (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone},${data.imsi});
+#获取appId
+GET /api/permissions/getAppId: SELECT appId FROM sdkOfferCollect GROUP BY appId;
 #获取offerId 根据appId
-GET /api/permissions/getOfferId:
-  SELECT offerId FROM sdkOfferCollect WHERE appId=${data.appId} GROUP BY offerId;
+GET /api/permissions/getOfferId: SELECT s.offerId,s.appId,p.carrier FROM (SELECT carrier,requestId FROM permissionCollect WHERE !ISNULL(carrier) AND carrier=IF(${data.carrier}='',carrier,${data.carrier})) p LEFT JOIN (SELECT offerId,requestId,appId FROM sdkOfferCollect GROUP BY requestId) s ON s.requestId = p.requestId WHERE !ISNULL(s.offerId) GROUP BY s.offerId;
 #根据request查询请求条数
 GET /api/permissions/seacher: |
-  SELECT  s.offerId AS offerId,s.appId AS appId,s.userId AS userId,s.requestId AS requestId,p.imsi,p.canNotify,p.networkType,s.uploadTime AS uploadTime  FROM  (SELECT requestId,networkType,canNotify,imsi FROM permissionCollect WHERE
-  canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND 
+  SELECT  s.offerId AS offerId,s.appId AS appId,s.userId AS userId,s.requestId AS requestId,p.imsi,p.canNotify,p.carrier,p.country,p.networkType,s.uploadTime AS uploadTime  FROM  (SELECT requestId,networkType,canNotify,imsi,carrier,country FROM permissionCollect WHERE
+  canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND carrier=IF(${data.carrier}='',carrier,${data.carrier}) AND 
   IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)) p  LEFT JOIN(SELECT offerId,appId,requestId,uploadTime,userId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId ORDER BY s.uploadTime DESC,s.userId limit @{(data.currentPage-1)*data.page_size},@{data.page_size*data.currentPage};
-GET /api/permissions/getTools:
-  SELECT COUNT(s.offerId) FROM (SELECT requestId FROM permissionCollect WHERE canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)) p  LEFT JOIN(SELECT offerId,requestId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId;
+GET /api/permissions/getTools: SELECT COUNT(s.offerId) FROM (SELECT requestId FROM permissionCollect WHERE canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)) p  LEFT JOIN(SELECT offerId,requestId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId;
 #根据request查询查询详情页
-GET /api/permissions/details:
-  SELECT uploadTime,step,stepStatus,s.url,filePath,createTime FROM (SELECT createTime,requestId,step,stepStatus,url,uploadTime FROM sdkOfferCollect WHERE requestId=${data.requestId}) s LEFT JOIN (SELECT requestId,filePath,url FROM visit) v ON v.requestId = s.requestId AND v.url =s.url ORDER BY createTime;
+GET /api/permissions/details: SELECT uploadTime,step,stepStatus,s.url,filePath,createTime FROM (SELECT createTime,requestId,step,stepStatus,url,uploadTime FROM sdkOfferCollect WHERE requestId=${data.requestId}) s LEFT JOIN (SELECT requestId,filePath,url FROM visit) v ON v.requestId = s.requestId AND v.url =s.url ORDER BY createTime;
 #根据appID 以及时间查询统计用户数 和pv
 GET /api/permissions/tootalPV: |
   SELECT b.NNPV,b.offerId,b.appId,b.canNotifyUserCount,b.canNotifyPV,b.totalPV,b.totalUserCount,b.mobilePV,b.wifiPV,IF(m.messageCount,m.messageCount,0) AS messageCount,IF(m.pinCodeCount,m.pinCodeCount,0) AS pinCodeCount,b.mobileUserCount,b.wifiUserCount FROM (SELECT offerId,appId,COUNT(offerId)AS totalPV,COUNT(DISTINCT userId)AS totalUserCount,SUM(IF(networkType !=2 && canNotify=1, 1, 0)) AS NNPV,SUM(IF(networkType!=2,0,1))AS mobilePV,SUM(IF(networkType=2,0,1))AS wifiPV,COUNT(DISTINCT CASE WHEN networkType!=2 THEN userId END)AS mobileUserCount,COUNT(DISTINCT CASE WHEN networkType=2 THEN userId END)AS wifiUserCount,SUM(IF(canNotify = 0, 0, 1)) AS canNotifyPV,COUNT(DISTINCT CASE WHEN canNotify = 1 THEN userId END) AS canNotifyUserCount FROM (SELECT visit.appId AS appId,visit.offerId AS offerId,permissionCollect.userId AS userId,permissionCollect.networkType AS networkType,permissionCollect.canNotify AS canNotify FROM(SELECT*FROM permissionCollect)permissionCollect LEFT JOIN(SELECT offerId,requestId,appId FROM sdkOfferCollect WHERE appId=${data.appId}AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000)AND FROM_UNIXTIME(${data.timeEnd}/1000)GROUP BY requestId)visit ON permissionCollect.requestId=visit.requestId)s WHERE !ISNULL(s.offerId)GROUP BY s.offerId) b LEFT JOIN (SELECT offerId,COUNT(DISTINCT CASE WHEN IF(pinInject = '', NULL, 1) THEN requestId END) AS pinCodeCount,COUNT(DISTINCT CASE WHEN IF(message = '', NULL, 1) THEN requestId END) AS messageCount FROM pinCodeCollect WHERE appId=${data.appId} AND uploadTime>=@{data.timeStart} AND uploadTime<@{data.timeEnd} GROUP BY offerId) m ON m.offerId=b.offerId ;
 #短信表插入
-POST /api/pins/getIde:
-  INSERT INTO pinCodeCollects (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
-POST /api/pin/getIde:
-  INSERT INTO pinCodeCollect (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
+POST /api/pins/getIde: INSERT INTO pinCodeCollects (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
+POST /api/pin/getIde: INSERT INTO pinCodeCollect (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
 #短信更新
-POST /api/pinInjects/getIde:
-  update pinCodeCollects set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};
-POST /api/pinInject/getIde:
-  update pinCodeCollect set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};
+POST /api/pinInjects/getIde: update pinCodeCollects set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};
+POST /api/pinInject/getIde: update pinCodeCollect set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};
 #短信搜索
-GET /api/pinInject/getMassages:
-  SELECT appId,requestId,offerId,userId,pinInject,message,from_unixtime(uploadTime/1000, '%Y-%m-%d %H:%i:%S') AS uploadTime FROM pinCodeCollect WHERE appId = ${data.appId} AND offerId = ${data.offerId} AND uploadTime < @{data.timeEnd} AND uploadTime >= @{data.timeStart} ORDER BY uploadTime DESC,userId; 
+GET /api/pinInject/getMassages: SELECT appId,requestId,offerId,userId,pinInject,message,from_unixtime(uploadTime/1000, '%Y-%m-%d %H:%i:%S') AS uploadTime FROM pinCodeCollect WHERE appId = ${data.appId} AND offerId = ${data.offerId} AND uploadTime < @{data.timeEnd} AND uploadTime >= @{data.timeStart} ORDER BY uploadTime DESC,userId;
+#根据APPid 获取运营商
+GET /api/permissions/getCarrier: 
+  SELECT p.carrier,s.appId FROM (SELECT carrier,requestId FROM permissionCollect WHERE !ISNULL(carrier)) p LEFT JOIN (SELECT appId,requestId FROM sdkOfferCollect WHERE appId = ${data.appId}) s ON s.requestId = p.requestId WHERE !ISNULL(s.appId) GROUP BY p.carrier;
