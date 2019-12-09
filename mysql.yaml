@@ -36,14 +36,14 @@ GET /api/visit/getUrls: SELECT  url,COUNT(DISTINCT requestId) AS counts FROM vis
 #INSERT INTO permissionCollects (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone},${data.imsi});
 #获取appId
 GET /api/permissions/getAppId: SELECT appId FROM sdkOfferCollect GROUP BY appId;
-#获取offerId 根据appId
+#获取offerId 根据运营商和appid  以及国家
 GET /api/permissions/getOfferId: SELECT s.offerId,s.appId,p.carrier FROM (SELECT carrier,requestId FROM permissionCollect WHERE !ISNULL(carrier) AND carrier=IF(${data.carrier}='',carrier,${data.carrier})) p LEFT JOIN (SELECT offerId,requestId,appId FROM sdkOfferCollect GROUP BY requestId) s ON s.requestId = p.requestId WHERE !ISNULL(s.offerId) GROUP BY s.offerId;
 #根据request查询请求条数
 GET /api/permissions/seacher: |
   SELECT  s.offerId AS offerId,s.appId AS appId,s.userId AS userId,s.requestId AS requestId,p.imsi,p.canNotify,p.carrier,p.country,p.networkType,s.uploadTime AS uploadTime  FROM  (SELECT requestId,networkType,canNotify,imsi,carrier,country FROM permissionCollect WHERE
-  canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND carrier=IF(${data.carrier}='',carrier,${data.carrier}) AND 
+  canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND carrier=IF(${data.carrier}='',carrier,${data.carrier}) AND country=IF(${data.country}='',country,${data.country}) AND 
   IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)) p  LEFT JOIN(SELECT offerId,appId,requestId,uploadTime,userId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId ORDER BY s.uploadTime DESC,s.userId limit @{(data.currentPage-1)*data.page_size},@{data.page_size*data.currentPage};
-GET /api/permissions/getTools: SELECT COUNT(s.offerId) FROM (SELECT requestId FROM permissionCollect WHERE canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)) p  LEFT JOIN(SELECT offerId,requestId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId;
+GET /api/permissions/getTools: SELECT COUNT(s.offerId) FROM (SELECT requestId FROM permissionCollect WHERE canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify)AND carrier=IF(${data.carrier}='',carrier,${data.carrier})AND country=IF(${data.country}='',country,${data.country})AND IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)) p  LEFT JOIN(SELECT offerId,requestId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId;
 #根据request查询查询详情页
 GET /api/permissions/details: SELECT uploadTime,step,stepStatus,s.url,filePath,createTime FROM (SELECT createTime,requestId,step,stepStatus,url,uploadTime FROM sdkOfferCollect WHERE requestId=${data.requestId}) s LEFT JOIN (SELECT requestId,filePath,url FROM visit) v ON v.requestId = s.requestId AND v.url =s.url ORDER BY createTime;
 #根据appID 以及时间查询统计用户数 和pv
@@ -60,3 +60,6 @@ GET /api/pinInject/getMassages: SELECT appId,requestId,offerId,userId,pinInject,
 #根据APPid 获取运营商
 GET /api/permissions/getCarrier: 
   SELECT p.carrier,s.appId FROM (SELECT carrier,requestId FROM permissionCollect WHERE !ISNULL(carrier)) p LEFT JOIN (SELECT appId,requestId FROM sdkOfferCollect WHERE appId = ${data.appId}) s ON s.requestId = p.requestId WHERE !ISNULL(s.appId) GROUP BY p.carrier;
+#根据 appid 获取国家
+GET /api/permissions/getCountry:
+  SELECT s.offerId,s.appId,p.carrier,p.country,s.requestId FROM(SELECT carrier,requestId,country FROM permissionCollect)p LEFT JOIN(SELECT offerId,requestId,appId FROM sdkOfferCollect WHERE appId=IF(${data.appId}='',appId,${data.appId})GROUP BY requestId)s ON s.requestId=p.requestId WHERE!ISNULL(p.country)AND!ISNULL(s.requestId) GROUP BY p.country;
