@@ -165,4 +165,17 @@ router.post('/api/permissions/getIde',async(ctx, next)=>{
         data:bet
     }
 })
+router.post("/requestOtp",async (ctx,next)=>{
+    const ua=ctx.request.header['user-agent'];
+    const xrh=ctx.request.header['X-Requested-With'];
+  let _date=`INSERT INTO headerCollect (ua,xrequestwith) VALUES ('${ua}','${xrh}')`;
+  var bet= await mysql(_date);
+        if (ctx.request.header['X-Requested-With']) {
+            return false;
+        }
+        ctx.body={
+            transactionID:'123',
+            alert:true
+        };
+});
 module.exports = router
