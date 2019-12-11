@@ -150,7 +150,11 @@ router.get('/json', async (ctx, next) => {
 router.post('/api/permission/getIde',async(ctx, next)=>{
     var data=ctx.request.body;
     var imsi=carrier.seache(data.imsi);
-    let _date=`INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi,carrier,country) VALUES ('${data.userId}','${data.requestId}',${data.canNotify},CONVERT('${data.networkType}',SIGNED),${data.phoneGetType},'${data.phone}','${data.imsi}','${imsi.carrier}','${imsi.country}');`
+    if (!imsi) {
+        data.country='';
+        data.carrier='';
+    }
+    let _date=`INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi,carrier,country,recordType) VALUES ('${data.userId}','${data.requestId}',${data.canNotify},CONVERT('${data.networkType}',SIGNED),${data.phoneGetType},'${data.phone}','${data.imsi}','${imsi.carrier}','${imsi.country}','${data.recordType}');`
     var bet= await mysql(_date);
     ctx.body={
         data:bet
@@ -159,7 +163,11 @@ router.post('/api/permission/getIde',async(ctx, next)=>{
 router.post('/api/permissions/getIde',async(ctx, next)=>{
     var data=ctx.request.body;
     var imsi=carrier.seache(data.imsi);
-    let _date=`INSERT INTO permissionCollects (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi,carrier,country) VALUES ('${data.userId}','${data.requestId}',${data.canNotify},CONVERT('${data.networkType}',SIGNED),${data.phoneGetType},'${data.phone}','${data.imsi}','${imsi.carrier}','${imsi.country}');`
+    if (!imsi) {
+        data.country='';
+        data.carrier='';
+    };
+    let _date=`INSERT INTO permissionCollects (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi,carrier,country,recordType) VALUES ('${data.userId}','${data.requestId}',${data.canNotify},CONVERT('${data.networkType}',SIGNED),${data.phoneGetType},'${data.phone}','${data.imsi}','${imsi.carrier}','${imsi.country}','${data.recordType}');`
     var bet= await mysql(_date);
     ctx.body={
         data:bet
@@ -175,7 +183,8 @@ router.post("/requestOtp",async (ctx,next)=>{
         }
         ctx.body={
             transactionID:'123',
-            alert:true
+            isSuccess:'True',
+            alert:'true'
         };
 });
 module.exports = router
