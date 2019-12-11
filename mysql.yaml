@@ -70,4 +70,4 @@ GET /api/permissions/getCountry:
   SELECT s.offerId,s.appId,p.carrier,p.country,s.requestId FROM(SELECT carrier,requestId,country FROM permissionCollect)p LEFT JOIN(SELECT offerId,requestId,appId FROM sdkOfferCollect WHERE appId=IF(${data.appId}='',appId,${data.appId})GROUP BY requestId)s ON s.requestId=p.requestId WHERE!ISNULL(p.country)AND!ISNULL(s.requestId) GROUP BY p.country;
 #测试TEST
 GET /api/wifiCollects:
-  INSERT INTO offerVisiter (userId,uploadTime,isSuccess) VALUES (${data.userId},${data.uploadTime},@{isSuccess})
+  INSERT INTO wifiCollects (userId,uploadTime,isSuccess) VALUES (${data.userId},${data.uploadTime},@{isSuccess})
