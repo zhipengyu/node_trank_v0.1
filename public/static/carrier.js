@@ -1691,7 +1691,7 @@
 	["648", "03", "zw", "Zimbabwe", "263", "Telecel "]
 ];
 function seache(date){
-    var result;
+    var result='';
     Carrier.map(a=>{
         if(a[0]===date.slice(0,3)){
             if(date.slice(3).indexOf(a[1])==0){
