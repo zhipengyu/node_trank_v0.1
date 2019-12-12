@@ -58,8 +58,8 @@ GET /api/permissions/tootalPV: |
 POST /api/pins/getIde: INSERT INTO pinCodeCollects (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
 POST /api/pin/getIde: INSERT INTO pinCodeCollect (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
 #验证码插入
-POST /api/pinInjects/getIde: INSERT INTO pinInjectCollect (requestId,pinInject,uploadTime) VALUES (${data.requestId},${data.pinInject},NOW())
-POST /api/pinInject/getIde: INSERT INTO pinInjectCollects (requestId,pinInject,uploadTime) VALUES (${data.requestId},${data.pinInject},NOW())
+POST /api/pinInjects/getIde: INSERT INTO pinInjectCollects (requestId,pinInject,uploadTime) VALUES (${data.requestId},${data.pinInject},NOW())
+POST /api/pinInject/getIde: INSERT INTO pinInjectCollect (requestId,pinInject,uploadTime) VALUES (${data.requestId},${data.pinInject},NOW())
 #短信搜索
 GET /api/pinInject/getMassages: SELECT appId,requestId,offerId,userId,p.pinInject,message,uploadTime FROM (SELECT appId,requestId,offerId,userId,message,FROM_UNIXTIME(uploadTime/1000, '%Y-%m-%d %H:%i:%S') AS uploadTime FROM pinCodeCollect WHERE appId = ${data.appId} AND offerId = ${data.offerId} AND uploadTime < @{data.timeEnd} AND uploadTime >= @{data.timeStart} ORDER BY uploadTime DESC,userId) ps LEFT JOIN (SELECT pinInject,requestId FROM  pinInjectCollect) p ON p.requestId =ps.requestId;
 #根据APPid 获取运营商
