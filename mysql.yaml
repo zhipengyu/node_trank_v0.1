@@ -41,19 +41,25 @@ GET /api/permissions/getOfferId: SELECT s.offerId,s.appId,p.carrier FROM (SELECT
 #根据request查询请求条数
 GET /api/permissions/seacher: |
   SELECT  s.offerId AS offerId,s.appId AS appId,s.userId AS userId,s.requestId AS requestId,p.imsi,p.canNotify,p.carrier,p.country,p.networkType,s.uploadTime AS uploadTime  FROM  (SELECT requestId,networkType,canNotify,imsi,carrier,country FROM permissionCollect WHERE
-  canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND carrier=IF(${data.carrier}='',carrier,${data.carrier}) AND country=IF(${data.country}='',country,${data.country}) AND 
+  recordType=2 AND canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify) AND carrier=IF(${data.carrier}='',carrier,${data.carrier}) AND country=IF(${data.country}='',country,${data.country}) AND 
   IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)) p  LEFT JOIN(SELECT offerId,appId,requestId,uploadTime,userId FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}) AND userId=IF(${data.userId}='',userId,${data.userId}))s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId ORDER BY s.uploadTime DESC,s.userId limit @{(data.currentPage-1)*data.page_size},@{data.page_size*data.currentPage};
 GET /api/permissions/getTools: |
   SELECT COUNT(s.offerId) FROM (SELECT requestId FROM permissionCollect
-  WHERE canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify)AND carrier=IF(${data.carrier}='',carrier,${data.carrier})AND country=IF(${data.country}='',country,${data.country})AND IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)
+  WHERE recordType=2 AND canNotify=IF(CONVERT(${data.canNotify},SIGNED)>=0,CONVERT(${data.canNotify},SIGNED),canNotify)AND carrier=IF(${data.carrier}='',carrier,${data.carrier})AND country=IF(${data.country}='',country,${data.country})AND IF(@{data.networkType}>=0,IF(@{data.networkType}=0,networkType!=2,networkType=2),TRUE)
   ) p  LEFT JOIN(SELECT offerId,requestId FROM sdkOfferCollect
   WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) AND offerId=IF(${data.offerId}='',offerId,${data.offerId}) AND userId=IF(${data.userId}='',userId,${data.userId})
   )s  ON s.requestId=p.requestId  WHERE !ISNULL(s.offerId)  GROUP BY s.requestId;
+#统计总用户数和pv数
+GET /api/count/urserCounts:
+  SELECT COUNT(DISTINCT userId) AS userCounts, COUNT(DISTINCT requestId) AS pvCount FROM sdkOfferCollect WHERE appId=${data.appId} AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/ 1000) AND FROM_UNIXTIME(${data.timeEnd}/ 1000);
 #根据request查询查询详情页
 GET /api/permissions/details: SELECT uploadTime,step,stepStatus,s.url,filePath,createTime FROM (SELECT createTime,requestId,step,stepStatus,url,uploadTime FROM sdkOfferCollect WHERE requestId=${data.requestId}) s LEFT JOIN (SELECT requestId,filePath,url FROM visit) v ON v.requestId = s.requestId AND v.url =s.url ORDER BY createTime;
 #根据appID 以及时间查询统计用户数 和pv
 GET /api/permissions/tootalPV: |
-  SELECT b.NNPV,b.offerId,b.appId,b.canNotifyUserCount,b.canNotifyPV,b.totalPV,b.totalUserCount,b.mobilePV,b.wifiPV,IF(m.messageCount,m.messageCount,0) AS messageCount,IF(m.pinCodeCount,m.pinCodeCount,0) AS pinCodeCount,b.mobileUserCount,b.wifiUserCount FROM (SELECT offerId,appId,COUNT(offerId)AS totalPV,COUNT(DISTINCT userId)AS totalUserCount,SUM(IF(networkType !=2 && canNotify=1, 1, 0)) AS NNPV,SUM(IF(networkType!=2,0,1))AS mobilePV,SUM(IF(networkType=2,0,1))AS wifiPV,COUNT(DISTINCT CASE WHEN networkType!=2 THEN userId END)AS mobileUserCount,COUNT(DISTINCT CASE WHEN networkType=2 THEN userId END)AS wifiUserCount,SUM(IF(canNotify = 0, 0, 1)) AS canNotifyPV,COUNT(DISTINCT CASE WHEN canNotify = 1 THEN userId END) AS canNotifyUserCount FROM (SELECT visit.appId AS appId,visit.offerId AS offerId,permissionCollect.userId AS userId,permissionCollect.networkType AS networkType,permissionCollect.canNotify AS canNotify FROM(SELECT*FROM permissionCollect)permissionCollect LEFT JOIN(SELECT offerId,requestId,appId FROM sdkOfferCollect WHERE appId=${data.appId}AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000)AND FROM_UNIXTIME(${data.timeEnd}/1000)GROUP BY requestId)visit ON permissionCollect.requestId=visit.requestId)s WHERE !ISNULL(s.offerId)GROUP BY s.offerId) b LEFT JOIN (SELECT offerId,COUNT(DISTINCT CASE WHEN IF(pinInject = '', NULL, 1) THEN requestId END) AS pinCodeCount,COUNT(DISTINCT CASE WHEN IF(message = '', NULL, 1) THEN requestId END) AS messageCount FROM pinCodeCollect WHERE appId=${data.appId} AND uploadTime>=@{data.timeStart} AND uploadTime<@{data.timeEnd} GROUP BY offerId) m ON m.offerId=b.offerId ;
+  SELECT b.carrier,b.NNPV,b.offerId,b.appId,b.canNotifyUserCount,b.canNotifyPV,b.totalPV,b.totalUserCount,b.mobilePV,b.wifiPV,IF(m.messageCount,m.messageCount,0) AS messageCount,IF(m.pinCodeCount,m.pinCodeCount,0) AS pinCodeCount,b.mobileUserCount,b.wifiUserCount FROM
+    (SELECT offerId,appId,carrier,COUNT(offerId)AS totalPV,COUNT(DISTINCT userId)AS totalUserCount,SUM(IF(networkType !=2 && canNotify=1, 1, 0)) AS NNPV,SUM(IF(networkType!=2,0,1))AS mobilePV,SUM(IF(networkType=2,0,1))AS wifiPV,COUNT(DISTINCT CASE WHEN networkType!=2 THEN userId END)AS mobileUserCount,COUNT(DISTINCT CASE WHEN networkType=2 THEN userId END)AS wifiUserCount,SUM(IF(canNotify = 0, 0, 1)) AS canNotifyPV,COUNT(DISTINCT CASE WHEN canNotify = 1 THEN userId END) AS canNotifyUserCount FROM
+      (SELECT visit.appId AS appId,visit.offerId AS offerId,permissionCollect.userId AS userId,permissionCollect.networkType AS networkType,permissionCollect.canNotify AS canNotify,permissionCollect.carrier FROM(SELECT requestId,userId,networkType,canNotify,carrier FROM
+        permissionCollect WHERE recordType=2 GROUP BY requestId) permissionCollect LEFT JOIN(SELECT offerId,requestId,appId FROM sdkOfferCollect WHERE appId=${data.appId}AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000)AND FROM_UNIXTIME(${data.timeEnd}/1000)GROUP BY requestId)visit ON permissionCollect.requestId=visit.requestId)s WHERE !ISNULL(s.offerId)GROUP BY s.offerId) b LEFT JOIN (SELECT offerId,COUNT(DISTINCT CASE WHEN IF(pinInject = '', NULL, 1) THEN requestId END) AS pinCodeCount,COUNT(DISTINCT CASE WHEN IF(message = '', NULL, 1) THEN requestId END) AS messageCount FROM pinCodeCollect WHERE appId=${data.appId} AND uploadTime>=@{data.timeStart} AND uploadTime<@{data.timeEnd} GROUP BY offerId) m ON m.offerId=b.offerId ORDER BY carrier;
 #短信表插入
 POST /api/pins/getIde: INSERT INTO pinCodeCollects (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
 POST /api/pin/getIde: INSERT INTO pinCodeCollect (appId,offerId,userId,requestId,pinInject,message,uploadTime) VALUES (${data.appId},${data.offerId},${data.userId},${data.requestId},${data.pinInject},${data.message},${data.uploadTime});
@@ -61,13 +67,22 @@ POST /api/pin/getIde: INSERT INTO pinCodeCollect (appId,offerId,userId,requestId
 POST /api/pinInjects/getIde: INSERT INTO pinInjectCollects (requestId,pinInject,uploadTime) VALUES (${data.requestId},${data.pinInject},NOW())
 POST /api/pinInject/getIde: INSERT INTO pinInjectCollect (requestId,pinInject,uploadTime) VALUES (${data.requestId},${data.pinInject},NOW())
 #短信搜索
-GET /api/pinInject/getMassages: SELECT appId,ps.requestId,offerId,userId,p.pinInject,message,uploadTime FROM (SELECT appId,requestId,offerId,userId,message,FROM_UNIXTIME(uploadTime/1000, '%Y-%m-%d %H:%i:%S') AS uploadTime FROM pinCodeCollect WHERE appId = ${data.appId} AND offerId = ${data.offerId} AND uploadTime < @{data.timeEnd} AND uploadTime >= @{data.timeStart} ORDER BY uploadTime DESC,userId) ps LEFT JOIN (SELECT pinInject,requestId FROM  pinInjectCollect) p ON p.requestId =ps.requestId;
+GET /api/pinInject/getMassages: SELECT appId,ps.requestId,offerId,userId,p.pinInject,message,uploadTime FROM (SELECT appId,requestId,offerId,userId,message,FROM_UNIXTIME(uploadTime/1000, '%Y-%m-%d %H:%i:%S') AS uploadTime FROM pinCodeCollect WHERE appId = ${data.appId} AND offerId =IF(${data.offerId}='',offerId,${data.offerId}) AND uploadTime < @{data.timeEnd} AND uploadTime >= @{data.timeStart} ORDER BY uploadTime DESC,userId) ps LEFT JOIN (SELECT pinInject,requestId FROM  pinInjectCollect) p ON p.requestId =ps.requestId;
 #根据APPid 获取运营商
 GET /api/permissions/getCarrier: 
   SELECT p.carrier,s.appId FROM (SELECT carrier,requestId FROM permissionCollect WHERE !ISNULL(carrier)) p LEFT JOIN (SELECT appId,requestId FROM sdkOfferCollect WHERE appId = ${data.appId}) s ON s.requestId = p.requestId WHERE !ISNULL(s.appId) GROUP BY p.carrier;
 #根据 appid 获取国家
 GET /api/permissions/getCountry:
   SELECT s.offerId,s.appId,p.carrier,p.country,s.requestId FROM(SELECT carrier,requestId,country FROM permissionCollect)p LEFT JOIN(SELECT offerId,requestId,appId FROM sdkOfferCollect WHERE appId=IF(${data.appId}='',appId,${data.appId})GROUP BY requestId)s ON s.requestId=p.requestId WHERE!ISNULL(p.country)AND!ISNULL(s.requestId) GROUP BY p.country;
-#测试TEST
+#插入wifi转换式数据
 POST /api/wifiCollects:
   INSERT INTO wifiCollects (userId,uploadTime,isSuccess) VALUES (${data.userId},${data.uploadTime},@{data.isSuccess})
+#搜索短信验证码的OfferId
+GET /api/pinInject/getMPOfferId:
+ SELECT DISTINCT offerId FROM pinCodeCollect WHERE appId=${data.appId};
+ # 搜索加载时和进入时的关wifi的对比
+GET /api/permissions/permission: |
+ SELECT 
+  sa.offerId,canNotify,networkType,recordType,sa.uploadTime,sa.appId,sa.requestId,sa.userId
+  FROM (SELECT GROUP_CONCAT(canNotify) AS canNotify,GROUP_CONCAT(networkType) AS networkType,GROUP_CONCAT(recordType) AS recordType,requestId FROM permissionCollect GROUP BY requestId) p 
+  LEFT JOIN sdkOfferCollect  sa ON  p.requestId = sa.requestId WHERE appId=${data.appId} AND offerId=IF(${data.offerId}='',offerId,${data.offerId}) AND uploadTime BETWEEN FROM_UNIXTIME(${data.timeStart}/1000) AND FROM_UNIXTIME(${data.timeEnd}/1000) GROUP BY requestId;
