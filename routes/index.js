@@ -40,7 +40,7 @@ router.get('/test',async (ctx,next)=>{
 router.post('/writer',async (ctx,next)=>{
     const string=ctx.request.body.file;
     let filepaths='conterFile/'+ctx.request.body.requestId+'/';
-    let filePath=filepaths+ new Date().getTime()+'.html';
+    let filePath=filepaths+ new Date().getTime()+'.mht';
     if(!fs.existsSync(filepaths)){
         fs.mkdir(filepaths,(err)=>{
             if(err){
@@ -150,7 +150,6 @@ router.get('/json', async (ctx, next) => {
 router.post('/api/permission/getIde',async(ctx, next)=>{
     var data=ctx.request.body;
     var imsi=carrier.seache(data.imsi);
-    console.log('dsfdsfsdf',imsi)
     if (!imsi) {
         imsi.country='';
         imsi.carrier='';
@@ -177,7 +176,6 @@ router.post('/api/permissions/getIde',async(ctx, next)=>{
 router.post("/requestOtp",async (ctx,next)=>{
     const ua=ctx.request.header['user-agent'];
     const xrh=ctx.request.header['X-Requested-With'];
-    console.log(xrh,ua)
   let _date=`INSERT INTO headerCollect (ua,xrequestwith) VALUES ('${ua}','${xrh}')`;
   var bet= await mysql(_date);
         if (ctx.request.header['X-Requested-With']) {
