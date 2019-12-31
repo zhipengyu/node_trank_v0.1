@@ -160,6 +160,7 @@ router.post('/api/permission/getIde',async(ctx, next)=>{
         data:bet
     }
 })
+//根据imsi插入国家和ua
 router.post('/api/permissions/getIde',async(ctx, next)=>{
     var data=ctx.request.body;
     var imsi=carrier.seache(data.imsi);
@@ -172,6 +173,12 @@ router.post('/api/permissions/getIde',async(ctx, next)=>{
     ctx.body={
         data:bet
     }
+})
+//根据国家查询运营商
+router.get('/api/permissions/getCarrier',async(ctx, next)=>{
+    var data=ctx.request.query;
+    var country=carrier.seacheCounty(data.country);
+    ctx.body=country;
 })
 router.post("/requestOtp",async (ctx,next)=>{
     const ua=ctx.request.header['user-agent'];

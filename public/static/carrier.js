@@ -1706,5 +1706,15 @@ function seache(date){
     });
     return result;
 }
+function seacheCounty(country){
+	console.log(1,country)
+	let sresult=[];
+	Carrier.map(a=>{
+		if(a[2]==country){
+			sresult.push({carrier:a[5]})
+		}
+	})
+	return sresult;
+};
 
-module.exports={seache:seache};
+module.exports={seache:seache,seacheCounty:seacheCounty};

