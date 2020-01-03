@@ -23,7 +23,7 @@ onerror(app)
 app.use(koaBody({
     multipart: true,
     formidable: {
-        maxFileSize: 12354521356
+        maxFileSize: 123545213560
     }
 }));
 app.use(logger())
