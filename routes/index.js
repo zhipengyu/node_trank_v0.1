@@ -17,7 +17,7 @@ router.get('/test',async (ctx,next)=>{
 });
  router.post('/write',async (ctx,next)=>{
      const string=ctx.request.body.file;
-   let filepaths='conterFile/'+ctx.request.body.requestId+'/';
+   let filepaths='/data/conterFile/'+ctx.request.body.requestId+'/';
    let filePath=filepaths+ new Date().getTime()+'.html';
    if(!fs.existsSync(filepaths)){
        fs.mkdir(filepaths,(err)=>{
