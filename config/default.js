@@ -3,8 +3,8 @@ const config = {
     database: {
         DATABASE: 'dps-collect-koa',
         USERNAME: 'root',
-        PASSWORD: 'mobikok@2018..',
-        PORT: '3306',
+        PASSWORD: 'mobikok@2019',
+        PORT: '3307',
         HOST: '104.250.131.170'
     }
 }
