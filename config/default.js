@@ -1,10 +1,10 @@
 const config = {
     // 数据库配置
     database: {
-        DATABASE: 'dps-collect-koa',
+        DATABASE: 'sdk_logs',
         USERNAME: 'root',
-        PASSWORD: 'mobikok@2019',
-        PORT: '3307',
+        PASSWORD: 'sdk@2020',
+        PORT: '3309',
         HOST: '104.250.131.170'
     }
 }

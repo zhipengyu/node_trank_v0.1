@@ -2,3 +2,4 @@
 node_modules/
 conterFile/
 package-lock.json
+test/

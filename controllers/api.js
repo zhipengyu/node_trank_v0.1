@@ -19,7 +19,6 @@ function best() {
                 data=ctx.params;
             };
             const _date = stringEs6(_sql, data);
-            console.log(_date)
             const bet = await mysql(_date);
             ctx.rest({
                 data: bet
