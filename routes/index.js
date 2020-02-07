@@ -20,8 +20,8 @@ const carrier=require('../public/static/carrier')
    };
      var data=ctx.request.body;
      var filePathend='https://kilo.pub/offerHtml'+filePath.replace('/data/conterFile','');
+     console.log(filePath);
      let _date=`INSERT INTO sdk_offer_new_page_collect (app_id,offer_id,request_id,url,upload_time,local_url,create_time) VALUES (${data.appId},${data.offerId} ,'${ data.requestId }','${data.url}' ,${data.uploadTime},'${filePathend}',NOW());`
-     console.log(filePath)
      const bet = await mysql(_date);
      let upstrame=fs.createWriteStream(filePath);
      upstrame.write(string);
