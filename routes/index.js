@@ -13,13 +13,13 @@ const carrier=require('../public/static/carrier')
    let filePath=filepaths+new_temp.uploadTime+'.html';
    if(!fs.existsSync(filepaths)){
        fs.mkdir(filepaths,(err)=>{
-        let upstrame=fs.createWriteStream(filePath);
-        upstrame.write(string);
            if(err){
                throw new Error(err)
            }
        });
    };
+   let upstrame=fs.createWriteStream(filePath);
+   upstrame.write(string);
     //  var data=ctx.request.body;
     //  var filePathend='https://kilo.pub/offerHtml'+filePath.replace('/data/conterFile','');
     //  console.log(filePathend);
