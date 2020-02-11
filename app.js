@@ -26,7 +26,7 @@ app.use(koaBody({
         maxFileSize: 123545213560
     }
 }));
-app.use(bodyParser.json({limit :'2100000kb'})); 
+// app.use(bodyParser.json({limit :'2100000kb'})); 
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
