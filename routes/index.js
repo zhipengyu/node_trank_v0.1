@@ -45,6 +45,19 @@ function newdate(num){
          data: _date
      }
  })
+
+router.get('/api/Offerlogs',async (ctx,next)=>{
+    const data=ctx.body;
+    var myDate = new Date();
+    var years=myDate.getFullYear();
+    var mon=myDate.getMonth()+1;
+    var day=myDate.getDate();
+    let _date=`SELECT * FROM sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} WHERE IF(app_id=${data.app_id} || ISNULL(${data.app_id}),TRUE,FALSE) AND IF(offer_id=${data.offer_id} || ISNULL(${data.offer_id}),TRUE,FALSE) ORDER BY request_id,create_time limits ${(data.currentPage-1)*data.page_size},${data.page_size*data.currentPage};`;
+    const bet = await mysql(_date);
+    ctx.body={
+        data: _date
+    }
+    })
 // router.post('/writer',async (ctx,next)=>{
 //     const string=ctx.request.body.file;
 //     let filepaths='/data/conterFile/'+ctx.request.body.requestId+'/';
