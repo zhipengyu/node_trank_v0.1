@@ -25,10 +25,13 @@ function newdate(num){
            if(err){
                throw new Error(err)
            }
+           let upstrame=fs.createWriteStream(filePath);
+           upstrame.write(string);
        });
+   }else{
+    let upstrame=fs.createWriteStream(filePath);
+    upstrame.write(string);
    };
-   let upstrame=fs.createWriteStream(filePath);
-   upstrame.write(string);
    var myDate = new Date();
    var years=myDate.getFullYear();
    var mon=myDate.getMonth()+1;
