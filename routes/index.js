@@ -34,12 +34,11 @@ function newdate(num){
    var day=myDate.getDate();
      var data=ctx.request.body;
      var filePathend='https://kilo.pub/offerHtml'+filePath.replace('/data/conterFile','');
-     console.log(filePathend);
      let _date=`INSERT INTO sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} (app_id,offer_id,request_id,url,upload_time,local_url,create_time) VALUES (${data.appId},${data.offerId} ,'${ data.requestId }','${data.url}' ,${data.uploadTime},'${filePathend}',NOW());`
      const bet = await mysql(_date);
      console.log(_date)
      ctx.body={
-         data: 'success'
+         data: _date
      }
  })
 // router.post('/writer',async (ctx,next)=>{
