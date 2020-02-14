@@ -46,16 +46,16 @@ function newdate(num){
      }
  })
 
-router.get('/api/Offerlogs',async (ctx,next)=>{
-    const data=ctx.body;
+router.get('/Offerlogs',async (ctx,next)=>{
+    const data=ctx.request.query;
     var myDate = new Date();
     var years=myDate.getFullYear();
     var mon=myDate.getMonth()+1;
     var day=myDate.getDate();
-    let _date=`SELECT * FROM sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} WHERE IF(app_id=${data.app_id} || ISNULL(${data.app_id}),TRUE,FALSE) AND IF(offer_id=${data.offer_id} || ISNULL(${data.offer_id}),TRUE,FALSE) ORDER BY request_id,create_time limits ${(data.currentPage-1)*data.page_size},${data.page_size*data.currentPage};`;
+    let _date=`SELECT * FROM sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} WHERE IF(app_id=${data.app_id} || ISNULL(${data.app_id}),TRUE,FALSE) AND IF(offer_id=${data.offer_id} || ISNULL(${data.offer_id}),TRUE,FALSE) ORDER BY request_id,create_time LIMIT ${(data.currentPage-1)*data.page_size},${data.page_size*data.currentPage};`;
     const bet = await mysql(_date);
     ctx.body={
-        data: _date
+        data: bet
     }
     })
 // router.post('/writer',async (ctx,next)=>{
