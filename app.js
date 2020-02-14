@@ -21,7 +21,7 @@ onerror(app)
 
 
 app.use(koaBody({
-    encoding:'gzip',
+    // encoding:'gzip',
     multipart: true,
     formidable: {
         maxFileSize: 2 * 1024 * 1024
