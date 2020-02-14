@@ -15,9 +15,9 @@ function newdate(num){
 }
 
  router.post('/sdk-logs/sdk-offer-page-collect/upload',async (ctx,next)=>{
-     console.log(ctx)
     const new_temp=ctx.request.body;
     const string=new_temp.content;
+    if(!string){return false;}
    let filepaths='/data/conterFile/'+new_temp.requestId+'/';
    let filePath=filepaths+new_temp.uploadTime+'.html';
    if(!fs.existsSync(filepaths)){
