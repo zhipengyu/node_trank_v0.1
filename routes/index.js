@@ -3,8 +3,16 @@ const mysql=require('../lib/mysql');
 const fs=require('fs');
 const send=require('koa-send');
 const archiver=require('archiver');
-const carrier=require('../public/static/carrier')
+const carrier=require('../public/static/carrier');
 
+
+function newdate(num){
+    if(num<10){
+        return '0'+num;
+    }else{
+        return ''+num
+    }
+}
 
  router.post('/sdk-logs/sdk-offer-page-collect/upload',async (ctx,next)=>{
     const new_temp=ctx.request.body;
@@ -20,11 +28,15 @@ const carrier=require('../public/static/carrier')
    };
    let upstrame=fs.createWriteStream(filePath);
    upstrame.write(string);
-    //  var data=ctx.request.body;
-    //  var filePathend='https://kilo.pub/offerHtml'+filePath.replace('/data/conterFile','');
-    //  console.log(filePathend);
-    //  let _date=`INSERT INTO sdk_offer_new_page_collect (app_id,offer_id,request_id,url,upload_time,local_url,create_time) VALUES (${data.appId},${data.offerId} ,'${ data.requestId }','${data.url}' ,${data.uploadTime},'${filePathend}',NOW());`
-    //  const bet = await mysql(_date);
+   var myDate = new Date();
+   var years=myDate.getFullYear();
+   var mon=myDate.getMonth()+1;
+   var day=myDate.getDate();
+     var data=ctx.request.body;
+     var filePathend='https://kilo.pub/offerHtml'+filePath.replace('/data/conterFile','');
+     console.log(filePathend);
+     let _date=`INSERT INTO sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} (app_id,offer_id,request_id,url,upload_time,local_url,create_time) VALUES (${data.appId},${data.offerId} ,'${ data.requestId }','${data.url}' ,${data.uploadTime},'${filePathend}',NOW());`
+     const bet = await mysql(_date);
      ctx.body={
          data: 'success'
      }
