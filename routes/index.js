@@ -52,33 +52,20 @@ router.get('/Offerlogs',async (ctx,next)=>{
     var years=myDate.getFullYear();
     var mon=myDate.getMonth()+1;
     var day=myDate.getDate();
-    let _date=`SELECT * FROM sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} WHERE IF(app_id=${data.app_id} || ISNULL(${data.app_id}),TRUE,FALSE) AND IF(offer_id=${data.offer_id} || ISNULL(${data.offer_id}),TRUE,FALSE) ORDER BY request_id,create_time LIMIT ${(data.currentPage-1)*data.page_size},${data.page_size*data.currentPage};`;
+    var offerIf=''
+    if(ctx.request.query.offer_id){
+        offerIf='AND offer_id=' +ctx.request.query.offer_id
+    }
+    let _total=`SELECT COUNT(app_id) AS total FROM sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} WHERE IF(app_id=${data.app_id} || ISNULL(${data.app_id}),TRUE,FALSE) ${offerIf}`;
+    let _date=`SELECT app_id,offer_id,request_id,url,local_url,upload_time,create_time FROM sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} WHERE IF(app_id=${data.app_id} || ISNULL(${data.app_id}),TRUE,FALSE) ${offerIf} ORDER BY request_id ASC,create_time DESC LIMIT ${(data.currentPage-1)*data.page_size},${data.page_size*data.currentPage};`;
     const bet = await mysql(_date);
+    const total = await mysql(_total);
+    this.total=total[0].total;
     ctx.body={
-        data: bet
+        data: bet,
+        total: total
     }
     })
-// router.post('/writer',async (ctx,next)=>{
-//     const string=ctx.request.body.file;
-//     let filepaths='/data/conterFile/'+ctx.request.body.requestId+'/';
-//     let filePath=filepaths+ new Date().getTime()+'.html';
-//     if(!fs.existsSync(filepaths)){
-//         fs.mkdir(filepaths,(err)=>{
-//             if(err){
-//                 throw new Error(err)
-//             }
-//         });
-//     };
-//     var data=ctx.request.body;
-//     var filePathend='https://kilo.pub/offerHtml'+filePath.replace('conterFile','');
-//     let _date=`INSERT INTO visiter (url,offerId,pv,cookieCount,filePath,appId,requestId) VALUES ('${data.url}' ,'${ data.offerId }','${data.pv}' ,'${data.cookieCount}','${filePathend}','${data.appId}','${data.requestId}');`
-//     const bet = await mysql(_date);
-//     let upstrame=fs.createWriteStream(filePath);
-//     upstrame.write(string);
-//     ctx.body={
-//         data:bet
-//     }
-// })
 
 router.post('/user/login',async (ctx,next)=>{
   var date=ctx.request.body;
@@ -145,7 +132,6 @@ router.get('/downLoad', async (ctx, next) => {
     await fs.unlinkSync(zipName);
 });
 router.get("/getSms",async (ctx,next)=>{
-        // var dest=parseInt(Math.random()*99999000+1000);
     var string='';arr=4+parseInt(Math.random()*5);
     for (var i=0;i<arr;i++){
         var det=parseInt(Math.random()*9);
@@ -153,58 +139,4 @@ router.get("/getSms",async (ctx,next)=>{
     }
     ctx.body=`你好！你的验证码为 ${string},非本人操作,请勿给他人`;
 });
-// router.get('/json', async (ctx, next) => {
-//   ctx.body = {
-//     title: 'koa2 json'
-//   }
-// });
-
-// router.post('/api/permission/getIde',async(ctx, next)=>{
-//     var data=ctx.request.body;
-//     var imsi=carrier.seache(data.imsi);
-//     if (!imsi) {
-//         imsi.country='';
-//         imsi.carrier='';
-//     };
-//     let _date=`INSERT INTO permissionCollect (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi,carrier,country,recordType) VALUES ('${data.userId}','${data.requestId}',${data.canNotify},CONVERT('${data.networkType}',SIGNED),${data.phoneGetType},'${data.phone}','${data.imsi}','${imsi.carrier}','${imsi.country}','${data.recordType}');`
-//     var bet= await mysql(_date);
-//     ctx.body={
-//         data:bet
-//     }
-// })
-//根据imsi插入国家和ua
-// router.post('/api/permissions/getIde',async(ctx, next)=>{
-//     var data=ctx.request.body;
-//     var imsi=carrier.seache(data.imsi);
-//     if (!imsi) {
-//         imsi.country='';
-//         imsi.carrier='';
-//     };
-//     let _date=`INSERT INTO permissionCollects (userId,requestId,canNotify,networkType,phoneGetType,phone,imsi,carrier,country,recordType) VALUES ('${data.userId}','${data.requestId}',${data.canNotify},CONVERT('${data.networkType}',SIGNED),${data.phoneGetType},'${data.phone}','${data.imsi}','${imsi.carrier}','${imsi.country}','${data.recordType}');`
-//     var bet= await mysql(_date);
-//     ctx.body={
-//         data:bet
-//     }
-// })
-//根据国家查询运营商
-// router.get('/api/permissions/getCarrier',async(ctx, next)=>{
-//     var data=ctx.request.query;
-//     var country=carrier.seacheCounty(data.country);
-//     ctx.body=country;
-// })
-// router.post("/requestOtp",async (ctx,next)=>{
-//     const ua=ctx.request.header['user-agent'];
-//     const xrh=ctx.request.header['X-Requested-With'];
-//   let _date=`INSERT INTO headerCollect (ua,xrequestwith) VALUES ('${ua}','${xrh}')`;
-//   var bet= await mysql(_date);
-//         if (ctx.request.header['X-Requested-With']) {
-//             return false;
-//         }
-//         ctx.body={
-//             transactionID:'123',
-//             isSuccess:'True',
-//             alert:'true',
-//             bet:bet
-//         };
-// });
 module.exports = router
