@@ -141,7 +141,13 @@ router.get("/getSms",async (ctx,next)=>{
 });
 router.post('/requestOtp',async(ctx,next)=>{
     ctx.body={
-        isSuccess:'TRUE',
+        isSuccess:'TRUE'
+    }
+})
+router.post('/confirmOtp',async(ctx,next)=>{
+    ctx.body={
+        cURL:'http://kilo.pub:3000/s/aoc-AIS/aa/bb/sucess.html',
+        isSuccess:'TRUE'
     }
 })
 module.exports = router
