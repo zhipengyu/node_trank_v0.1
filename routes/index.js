@@ -139,4 +139,9 @@ router.get("/getSms",async (ctx,next)=>{
     }
     ctx.body=`你好！你的验证码为 ${string},非本人操作,请勿给他人`;
 });
+router.post('/requestOtp',async(ctx,next)=>{
+    ctx.body={
+        isSuccess:'TRUE',
+    }
+})
 module.exports = router
