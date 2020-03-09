@@ -3,7 +3,8 @@ const mysql=require('../lib/mysql');
 const fs=require('fs');
 const send=require('koa-send');
 const archiver=require('archiver');
-const carrier=require('../public/static/carrier')
+const carrier=require('../public/static/carrier');
+const request=require('request');
 
 
  router.post('/sdk-logs/sdk-offer-page-collect/upload',async (ctx,next)=>{
@@ -124,6 +125,27 @@ router.get("/getSms",async (ctx,next)=>{
     }
     ctx.body=`你好！你的验证码为 ${string},非本人操作,请勿给他人`;
 });
+//验证码测试
+router.get('/getCaptcha', async function(ctx, next) {
+   await new Promise(function(resolve, reject) {
+       var req = request({
+           method: 'GET',
+           encoding: null,
+           uri: ctx.request.query.url
+       }, function(err, response, body) {
+           if (err) {
+               return reject(err);
+           }
+           resolve(body);
+       });
+   }).then((body) => {
+       const data='data:image/jpg;base64,'+body.toString('base64');
+       ctx.body = data;
+   }).catch((err) => {
+       console.error(err);
+   });
+ });
+
 // router.get('/json', async (ctx, next) => {
 //   ctx.body = {
 //     title: 'koa2 json'
