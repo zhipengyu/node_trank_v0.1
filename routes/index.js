@@ -4,10 +4,7 @@ const fs=require('fs');
 const send=require('koa-send');
 const archiver=require('archiver');
 const carrier=require('../public/static/carrier');
-<<<<<<< HEAD
 const request=require('request');
-=======
->>>>>>> a509937237edca511acc9ddb6856d3d336fd3c09
 
 
 function newdate(num){
