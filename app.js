@@ -21,11 +21,13 @@ onerror(app)
 
 
 app.use(koaBody({
+    // encoding:'gzip',
     multipart: true,
     formidable: {
-        maxFileSize: 123545213560
+        maxFileSize: 2 * 1024 * 1024
     }
 }));
+// app.use(bodyParser.json({limit :'2100000kb'})); 
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
