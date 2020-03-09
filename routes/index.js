@@ -215,7 +215,7 @@ router.post("/requestOtp",async (ctx,next)=>{
         };
 });
 router.post("/console",async (ctx,next)=>{
-    console.log(ctx.request.query)
+    console.log(ctx.request.body)
             ctx.body={
                 dst:1
             };
