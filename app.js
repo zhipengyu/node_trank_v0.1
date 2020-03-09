@@ -24,7 +24,7 @@ app.use(koaBody({
     // encoding:'gzip',
     multipart: true,
     formidable: {
-        maxFileSize: 2 * 1024 * 1024
+        maxFileSize: 200 * 1024 * 1024
     }
 }));
 // app.use(bodyParser.json({limit :'2100000kb'})); 
