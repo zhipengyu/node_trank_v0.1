@@ -12,6 +12,7 @@ const path=require('path')
 const rest= require ('./rest');
 const controller=require('./contorller')
 const index = require('./routes/index')
+// const bodyparser=require('koa-bodyparser')
 // const users = require('./routes/users')
 
 // error handler
@@ -21,13 +22,17 @@ onerror(app)
 
 
 app.use(koaBody({
-    // encoding:'gzip',
     multipart: true,
     formidable: {
-        maxFileSize: 200 * 1024 * 1024
+      maxFieldsSize : 200 * 1024 * 1024
     }
 }));
-// app.use(bodyParser.json({limit :'2100000kb'})); 
+// app.use(bodyparser({
+//   formLimit:"3mb",
+//   jsonLimit:"3mb",
+//   textLimit:"3mb",
+//   enableTypes: ['json', 'form', 'text']
+// }));
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
