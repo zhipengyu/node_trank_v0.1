@@ -20,12 +20,11 @@ onerror(app)
 
 // middlewares
 
-
 app.use(koaBody({
-    multipart: true,
-    formidable: {
-      maxFieldsSize : 200 * 1024 * 1024
-    }
+  multipart: true,
+  formidable: {
+      maxFileSize: 52428800
+  }
 }));
 // app.use(bodyparser({
 //   formLimit:"3mb",
