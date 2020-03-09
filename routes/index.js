@@ -214,4 +214,10 @@ router.post("/requestOtp",async (ctx,next)=>{
             alert:'true'
         };
 });
+router.post("/console",async (ctx,next)=>{
+    console.log(ctx.request.query)
+            ctx.body={
+                dst:1
+            };
+    });
 module.exports = router
