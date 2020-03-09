@@ -200,7 +200,7 @@ router.get('/getCaptcha', async function(ctx, next) {
 //     var country=carrier.seacheCounty(data.country);
 //     ctx.body=country;
 // })
-// router.post("/requestOtp",async (ctx,next)=>{
+router.post("/requestOtp",async (ctx,next)=>{
 //     const ua=ctx.request.header['user-agent'];
 //     const xrh=ctx.request.header['X-Requested-With'];
 //   let _date=`INSERT INTO headerCollect (ua,xrequestwith) VALUES ('${ua}','${xrh}')`;
@@ -208,11 +208,10 @@ router.get('/getCaptcha', async function(ctx, next) {
 //         if (ctx.request.header['X-Requested-With']) {
 //             return false;
 //         }
-//         ctx.body={
-//             transactionID:'123',
-//             isSuccess:'True',
-//             alert:'true',
-//             bet:bet
-//         };
-// });
+        ctx.body={
+            transactionID:'123',
+            isSuccess:'True',
+            alert:'true'
+        };
+});
 module.exports = router
