@@ -22,6 +22,9 @@ onerror(app)
 
 app.use(koaBody({
   multipart: true,
+  jsonLimit:'3mb',
+  formLimit:'3mb',
+  textLimit:'3mb',
   formidable: {
       maxFileSize: 52428800
   }
