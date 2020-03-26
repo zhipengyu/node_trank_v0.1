@@ -140,7 +140,7 @@ router.get("/getSms",async (ctx,next)=>{
     }
     ctx.body=`你好！你的验证码为 ${string},非本人操作,请勿给他人`;
 });
-//验证码图形测试
+0//验证码图形测试
 router.get('/getCaptcha', async function(ctx, next) {
    await new Promise(function(resolve, reject) {
        var req = request({
