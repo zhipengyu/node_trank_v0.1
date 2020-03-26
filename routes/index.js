@@ -140,7 +140,7 @@ router.get("/getSms",async (ctx,next)=>{
     }
     ctx.body=`你好！你的验证码为 ${string},非本人操作,请勿给他人`;
 });
-//验证码测试
+//验证码图形测试
 router.get('/getCaptcha', async function(ctx, next) {
    await new Promise(function(resolve, reject) {
        var req = request({
@@ -160,7 +160,6 @@ router.get('/getCaptcha', async function(ctx, next) {
        console.error(err);
    });
  });
-
 // router.get('/json', async (ctx, next) => {
 //   ctx.body = {
 //     title: 'koa2 json'
@@ -214,6 +213,31 @@ router.post("/requestOtp",async (ctx,next)=>{
             alert:'true'
         };
 });
+
+router.post("/add_offer_jsDashboard",async (ctx,next)=>{
+    const date=ctx.request.body;
+    const _date=`INSERT INTO offer_Dashboard (offer_Id,url,js_version) VALUES (${date.offer_Id},'${date.url}','${date.js_version}')`;
+    const bet= await mysql(_date);
+    ctx.body={
+        data:bet
+    }
+});
+router.post("/up_offer_jsDashboard",async (ctx,next)=>{
+    const date=ctx.request.body;
+    const _date=`UPDATE offer_Dashboard SET js_version='${date.js_version}',url='${date.url}' WHERE offer_Id=${date.offer_Id};`;
+    const bet= await mysql(_date);
+    ctx.body={
+        data:bet
+    }
+})
+router.get("/get_offer_jsDashboard",async (ctx,next)=>{
+    const date=ctx.request.query;
+    const _date=`SELECT * FROM offer_Dashboard WHERE offer_Id=${date.offer_Id};`;
+    const bet= await mysql(_date);
+    ctx.body={
+        data:bet
+    }
+})
 router.post("/console",async (ctx,next)=>{
     console.log(ctx.request.body)
             ctx.body={
