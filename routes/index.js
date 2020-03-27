@@ -216,7 +216,7 @@ router.post("/requestOtp",async (ctx,next)=>{
 
 router.post("/add_offer_jsDashboard",async (ctx,next)=>{
     const date=ctx.request.body;
-    const _date=`INSERT INTO offer_Dashboard (offer_Id,url,js_version) VALUES (${date.offer_Id},'${date.url}','${date.js_version}')`;
+    const _date=`INSERT INTO sdk_offer_dashboard (offer_Id,url,js_version) VALUES (${date.offer_Id},'${date.url}','${date.js_version}')`;
     const bet= await mysql(_date);
     ctx.body={
         data:bet
@@ -224,7 +224,7 @@ router.post("/add_offer_jsDashboard",async (ctx,next)=>{
 });
 router.post("/up_offer_jsDashboard",async (ctx,next)=>{
     const date=ctx.request.body;
-    const _date=`UPDATE offer_Dashboard SET js_version='${date.js_version}',url='${date.url}' WHERE offer_Id=${date.offer_Id};`;
+    const _date=`UPDATE sdk_offer_dashboard SET js_version='${date.js_version}',url='${date.url}' WHERE offer_Id=${date.offer_Id};`;
     const bet= await mysql(_date);
     ctx.body={
         data:bet
@@ -232,7 +232,7 @@ router.post("/up_offer_jsDashboard",async (ctx,next)=>{
 })
 router.get("/get_offer_jsDashboard",async (ctx,next)=>{
     const date=ctx.request.query;
-    const _date=`SELECT * FROM offer_Dashboard WHERE offer_Id=${date.offer_Id};`;
+    const _date=`SELECT * FROM sdk_offer_dashboard WHERE offer_Id=${date.offer_Id};`;
     const bet= await mysql(_date);
     ctx.body={
         data:bet
