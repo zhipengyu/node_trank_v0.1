@@ -21,18 +21,18 @@ function newdate(num){
     if(!string){return false;}
    let filepaths='/data/conterFile/'+new_temp.requestId+'/';
    let filePath=filepaths+new_temp.uploadTime+'.html';
-   if(!fs.existsSync(filepaths)){
-       fs.mkdir(filepaths,(err)=>{
-           if(err){
-               throw new Error(err)
-           }
+   //if(!fs.existsSync(filepaths)){
+     //  fs.mkdir(filepaths,(err)=>{
+           //if(err){
+               //throw new Error(err)
+           //}
 //            let upstrame=fs.createWriteStream(filePath);
 //            upstrame.write(string);
-       });
-   }else{
+       //});
+   //}else{
 //     let upstrame=fs.createWriteStream(filePath);
 //     upstrame.write(string);
-   };
+   //};
    var myDate = new Date();
    var years=myDate.getFullYear();
    var mon=myDate.getMonth()+1;
