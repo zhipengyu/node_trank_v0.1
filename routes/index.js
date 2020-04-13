@@ -61,8 +61,9 @@ router.get('/Offerlogs',async (ctx,next)=>{
     if(ctx.request.query.offer_id){
         offerIf='AND offer_id=' +ctx.request.query.offer_id
     }
-    let _total=`SELECT COUNT(app_id) AS total FROM sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} WHERE IF(app_id=${data.app_id} || ISNULL(${data.app_id}),TRUE,FALSE) ${offerIf}`;
+    let _total=`SELECT COUNT(app_id) AS total FROM sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} WHERE IF(app_id=${data.app_id} || ISNULL(${data.app_id}),TRUE,FALSE)`;
     let _date=`SELECT app_id,offer_id,request_id,url,local_url,upload_time,create_time FROM sdk_offer_new_page_collect_${years}_${newdate(mon)}_${newdate(day)} WHERE IF(app_id=${data.app_id} || ISNULL(${data.app_id}),TRUE,FALSE) ${offerIf} ORDER BY request_id ASC,create_time DESC LIMIT ${(data.currentPage-1)*data.page_size},${data.page_size*data.currentPage};`;
+    console.log(_total)
     const bet = await mysql(_date);
     const total = await mysql(_total);
     this.total=total[0].total;
